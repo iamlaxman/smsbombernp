@@ -178,7 +178,7 @@
         <div class="card">
             <div class="card-header"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><h2>Single Number</h2></div>
             <div class="input-group"><label class="input-label">Phone Number</label><input type="text" class="input-field" id="phone" placeholder="98XXXXXXXX" maxlength="10" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'');validateSingle()"><div class="input-error" id="phoneError"></div><div class="input-success" id="phoneOk"></div></div>
-            <div class="input-group"><label class="input-label">Number of Messages</label><input type="number" class="input-field" id="count" value="1" min="1" max="20" onchange="validateSingle()"><div class="input-hint">Max 20 messages</div></div>
+            <div class="input-group"><label class="input-label">Number of Messages</label><input type="number" class="input-field" id="count" value="1" min="1" max="20" ><div class="input-hint">Max 20 messages</div></div>
             <div class="checkbox-group"><input type="checkbox" id="agreeSingle" onchange="validateSingle()"><label for="agreeSingle">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
             <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileSingle" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW" data-callback="onSingleCaptcha" data-expired-callback="onSingleCaptchaExpired"></div></div>
             <button class="btn btn-primary" id="btnSingle" onclick="startSingle()" disabled>Send Messages</button>
@@ -190,7 +190,7 @@
         <div class="card">
             <div class="card-header"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/></svg></div><h2>Bulk Numbers</h2></div>
             <div class="input-group"><label class="input-label">Phone Numbers (one per line)</label><textarea class="input-field" id="bulkNumbers" placeholder="9867844454&#10;9842308880" oninput="validateBulk()"></textarea><div class="input-hint" id="bulkCount"></div></div>
-            <div class="input-group"><label class="input-label">Messages per Number</label><input type="number" class="input-field" id="bulkPerNum" value="1" min="1" max="5" onchange="validateBulk()"><div class="input-hint">Max 5 per number</div></div>
+            <div class="input-group"><label class="input-label">Messages per Number</label><input type="number" class="input-field" id="bulkPerNum" value="1" min="1" max="5" ><div class="input-hint">Max 5 per number</div></div>
             <div class="checkbox-group"><input type="checkbox" id="agreeBulk" onchange="validateBulk()"><label for="agreeBulk">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
             <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileBulk" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW" data-callback="onBulkCaptcha" data-expired-callback="onBulkCaptchaExpired"></div></div>
             <button class="btn btn-primary" id="btnBulk" onclick="startBulk()" disabled>Send Bulk Messages</button>
@@ -311,6 +311,11 @@
     window.toggleTheme = toggleTheme;
     (function() { var s=localStorage.getItem('theme'); if(s) document.documentElement.setAttribute('data-theme',s); })();
     validateSingle(); validateBulk();
+
+    document.getElementById('count').addEventListener('input', validateSingle);
+document.getElementById('count').addEventListener('change', validateSingle);
+document.getElementById('bulkPerNum').addEventListener('input', validateBulk);
+document.getElementById('bulkPerNum').addEventListener('change', validateBulk);
 </script>
 </body>
 </html>
