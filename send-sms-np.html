@@ -14,7 +14,8 @@
     <link rel="manifest" href="/favicon/site.webmanifest">
     <meta name="theme-color" content="#0f172a">
 
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <!-- Turnstile must load first -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
     <style>
         :root {
@@ -159,7 +160,7 @@
         <a href="index.html" class="nav-brand"><img src="/favicon/favicon-96x96.png" alt="Logo" width="28" height="28">SMS<span>Bomber</span>NP</a>
         <div style="display:flex;align-items:center;gap:10px">
             <a href="index.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back</a>
-            <button class="theme-btn" onclick="toggleTheme()" aria-label="Theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+            <button class="theme-btn" id="themeBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
         </div>
     </div>
 </nav>
@@ -180,7 +181,7 @@
             <div class="input-group"><label class="input-label">Phone Number</label><input type="text" class="input-field" id="phone" placeholder="98XXXXXXXX" maxlength="10" autocomplete="off"><div class="input-error" id="phoneError"></div><div class="input-success" id="phoneOk"></div></div>
             <div class="input-group"><label class="input-label">Number of Messages</label><input type="number" class="input-field" id="count" value="1" min="1" max="20"><div class="input-hint">Max 20 messages</div></div>
             <div class="checkbox-group"><input type="checkbox" id="agreeSingle"><label for="agreeSingle">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
-            <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileSingle" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW"></div></div>
+            <div class="captcha-wrap"><div id="turnstileSingle"></div></div>
             <button class="btn btn-primary" id="btnSingle" disabled>Send Messages</button>
         </div>
     </div>
@@ -192,7 +193,7 @@
             <div class="input-group"><label class="input-label">Phone Numbers (one per line)</label><textarea class="input-field" id="bulkNumbers" placeholder="9867844454&#10;9842308880"></textarea><div class="input-hint" id="bulkCount"></div></div>
             <div class="input-group"><label class="input-label">Messages per Number</label><input type="number" class="input-field" id="bulkPerNum" value="1" min="1" max="5"><div class="input-hint">Max 5 per number</div></div>
             <div class="checkbox-group"><input type="checkbox" id="agreeBulk"><label for="agreeBulk">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
-            <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileBulk" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW"></div></div>
+            <div class="captcha-wrap"><div id="turnstileBulk"></div></div>
             <button class="btn btn-primary" id="btnBulk" disabled>Send Bulk Messages</button>
         </div>
     </div>
@@ -322,14 +323,38 @@
     function toggleTheme() { var h=document.documentElement; h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark'); localStorage.setItem('theme',h.getAttribute('data-theme')); }
     (function() { var s=localStorage.getItem('theme'); if(s) document.documentElement.setAttribute('data-theme',s); })();
 
-    // ===== EVENT LISTENERS (No inline handlers needed!) =====
+    // ===== INIT TURNSTILE (Explicit Render) =====
+    function initTurnstile() {
+        if (typeof turnstile !== 'undefined') {
+            // Single widget
+            turnstile.render('#turnstileSingle', {
+                sitekey: '0x4AAAAAAD7S1fLfF6jUjYZW',
+                callback: function(token) { singleCaptcha = true; validateSingle(); },
+                'expired-callback': function() { singleCaptcha = false; validateSingle(); }
+            });
+            // Bulk widget
+            turnstile.render('#turnstileBulk', {
+                sitekey: '0x4AAAAAAD7S1fLfF6jUjYZW',
+                callback: function(token) { bulkCaptcha = true; validateBulk(); },
+                'expired-callback': function() { bulkCaptcha = false; validateBulk(); }
+            });
+        } else {
+            setTimeout(initTurnstile, 500);
+        }
+    }
+    
+    // Wait for Turnstile to load
+    if (document.readyState === 'complete') { initTurnstile(); }
+    else { window.addEventListener('load', initTurnstile); }
+    // Backup: try after 2 seconds
+    setTimeout(initTurnstile, 2000);
+
+    // ===== EVENT LISTENERS =====
     document.getElementById('phone').addEventListener('input', function(e) { this.value = this.value.replace(/[^0-9]/g,''); validateSingle(); });
     document.getElementById('count').addEventListener('input', validateSingle);
-    document.getElementById('count').addEventListener('change', validateSingle);
     document.getElementById('agreeSingle').addEventListener('change', validateSingle);
     document.getElementById('bulkNumbers').addEventListener('input', validateBulk);
     document.getElementById('bulkPerNum').addEventListener('input', validateBulk);
-    document.getElementById('bulkPerNum').addEventListener('change', validateBulk);
     document.getElementById('agreeBulk').addEventListener('change', validateBulk);
     document.getElementById('btnSingle').addEventListener('click', startSingle);
     document.getElementById('btnBulk').addEventListener('click', startBulk);
@@ -344,15 +369,9 @@
         document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')});
         document.getElementById('tab-bulk').classList.add('active'); this.classList.add('active');
     });
-
-    // Turnstile callbacks
-    window.onSingleCaptcha = function(t) { singleCaptcha = true; validateSingle(); };
-    window.onSingleCaptchaExpired = function() { singleCaptcha = false; validateSingle(); };
-    window.onBulkCaptcha = function(t) { bulkCaptcha = true; validateBulk(); };
-    window.onBulkCaptchaExpired = function() { bulkCaptcha = false; validateBulk(); };
+    document.getElementById('themeBtn').addEventListener('click', toggleTheme);
 
     window.toggleTheme = toggleTheme;
-
     validateSingle();
     validateBulk();
 </script>
