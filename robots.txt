@@ -1,0 +1,24 @@
+# SMS Bomber NP — Robots Configuration
+# https://smsbombernp.vercel.app/
+
+User-agent: *
+Allow: /
+
+# Disallow admin and sensitive pages
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /api/
+Disallow: /worker/
+
+# Disallow Firebase config paths
+Disallow: /__/
+Disallow: /firebase/
+
+# Crawl delay (polite crawling)
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://smsbombernp.vercel.app/sitemap.xml
+
+# Host
+Host: https://smsbombernp.vercel.app

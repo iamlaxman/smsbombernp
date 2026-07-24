@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Terms of Use — SMS Bomber NP</title>
+    <meta name="description" content="Terms of Use for SMS Bomber NP. Educational demonstration tool. Use at your own risk.">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta name="theme-color" content="#0f172a">
+    <style>
+        :root {
+            --bg: #f8fafc; --bg-secondary: #ffffff; --bg-tertiary: #f1f5f9;
+            --text: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+            --border: #e2e8f0; --primary: #dc2626; --primary-hover: #b91c1c;
+            --primary-light: #fef2f2; --accent: #1e40af;
+            --radius: 8px; --shadow: 0 1px 2px rgba(0,0,0,0.04);
+            --transition: 0.2s ease;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0b1120; --bg-secondary: #111827; --bg-tertiary: #1e293b;
+            --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+            --border: #1e293b; --primary: #ef4444; --primary-hover: #dc2626;
+            --primary-light: #450a0a; --accent: #3b82f6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0b1120; --bg-secondary: #111827; --bg-tertiary: #1e293b;
+                --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+                --border: #1e293b; --primary: #ef4444; --primary-hover: #dc2626;
+                --primary-light: #450a0a; --accent: #3b82f6;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: var(--font); background: var(--bg); color: var(--text);
+            line-height: 1.7; -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s; min-height: 100vh;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; word-wrap: break-word; overflow-wrap: break-word;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky; top: 0; z-index: 100; width: 100%;
+            background: rgba(248,250,252,0.88); backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+        [data-theme="dark"] .navbar { background: rgba(11,17,32,0.9); }
+        @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .navbar { background: rgba(11,17,32,0.9); } }
+        .nav-inner {
+            width: 100%; max-width: 780px; margin: 0 auto; padding: 0 16px;
+            display: flex; align-items: center; justify-content: space-between; height: 56px;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: clamp(0.85rem, 2.5vw, 1rem); color: var(--text); text-decoration: none; flex-shrink: 0; }
+        .nav-brand img { width: 26px; height: 26px; border-radius: 5px; flex-shrink: 0; }
+        .nav-brand span { color: var(--primary); }
+        .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .nav-back {
+            display: flex; align-items: center; gap: 4px; color: var(--text-secondary);
+            font-size: clamp(0.72rem, 2vw, 0.82rem); font-weight: 500; text-decoration: none;
+            padding: 6px 10px; border-radius: 6px; transition: var(--transition); white-space: nowrap;
+        }
+        .nav-back:hover { background: var(--bg-tertiary); color: var(--text); }
+        .nav-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+        .theme-btn {
+            width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--border);
+            background: transparent; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; color: var(--text-secondary); flex-shrink: 0;
+        }
+        .theme-btn:hover { background: var(--bg-tertiary); color: var(--text); }
+        .theme-btn svg { width: 13px; height: 13px; }
+
+        /* Content */
+        .content {
+            width: 100%; max-width: 780px; margin: 0 auto; padding: 24px 16px 48px;
+            flex: 1;
+        }
+        .content h1 { font-size: clamp(1.2rem, 4vw, 1.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+        .content .date { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; margin-bottom: 24px; display: block; }
+
+        .block {
+            background: var(--bg-secondary); border: 1.5px solid var(--border);
+            border-radius: var(--radius); padding: clamp(14px, 3vw, 20px);
+            margin-bottom: 12px; box-shadow: var(--shadow);
+        }
+        .block h2 {
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem); font-weight: 700; margin-bottom: 8px;
+            padding-bottom: 8px; border-bottom: 1.5px solid var(--border);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .block h2 svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; }
+        .block p { font-size: clamp(0.78rem, 2vw, 0.86rem); color: var(--text-secondary); margin-bottom: 8px; }
+        .block p:last-child { margin-bottom: 0; }
+        .block ul { list-style: none; padding: 0; margin: 0; }
+        .block ul li {
+            position: relative; padding-left: 16px; font-size: clamp(0.76rem, 2vw, 0.84rem);
+            color: var(--text-secondary); margin-bottom: 5px;
+        }
+        .block ul li::before { content: ''; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+        .block .highlight {
+            background: var(--primary-light); border: 1px solid var(--primary);
+            border-radius: 6px; padding: 10px 12px; margin-top: 8px;
+            font-weight: 600; font-size: clamp(0.74rem, 2vw, 0.8rem); color: var(--primary);
+        }
+
+        .footer {
+            text-align: center; padding: 16px; font-size: 0.68rem;
+            color: var(--text-muted); border-top: 1px solid var(--border); margin-top: auto;
+        }
+
+        @media (max-width: 480px) {
+            .nav-inner { padding: 0 10px; height: 50px; }
+            .content { padding: 16px 10px 32px; }
+            .block { padding: 12px 14px; }
+            .nav-back { padding: 5px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="/favicon/favicon-96x96.png" alt="Logo" width="26" height="26">SMS<span>Bomber</span>NP
+        </a>
+        <div class="nav-actions">
+            <a href="index.html" class="nav-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </a>
+            <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main class="content">
+    <h1>Terms of Use</h1>
+    <span class="date">Last Updated: July 23, 2026</span>
+
+    <div class="block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Acceptance of Terms</h2>
+        <p>By using SMS Bomber NP, you agree to these Terms of Use. If you do not agree, do not use this tool.</p>
+    </div>
+
+    <div class="block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="3"/></svg>Description of Service</h2>
+        <p>SMS Bomber NP is an educational security research tool demonstrating how SMS flooding attacks work on Nepal numbers. For educational purposes only.</p>
+    </div>
+
+    <div class="block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Prohibited Uses</h2>
+        <ul>
+            <li>Harassing, threatening, or intimidating any person</li>
+            <li>Sending messages to numbers you do not own without permission</li>
+            <li>Using the tool for any illegal activity</li>
+            <li>Commercial use or reselling access to this free tool</li>
+            <li>Automated abuse beyond the provided interface</li>
+        </ul>
+        <div class="highlight">Misuse may violate Nepal's Electronic Transactions Act 2063 — up to 5 years imprisonment and/or NPR 200,000 fine.</div>
+    </div>
+
+    <div class="block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>User Responsibilities</h2>
+        <p>You are solely responsible for complying with all applicable laws. Obtain permission before testing on any number you do not own.</p>
+    </div>
+
+    <div class="block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M2 12h20"/></svg>Disclaimer of Warranties</h2>
+        <p>THE TOOL IS PROVIDED "AS IS" WITHOUT ANY WARRANTY. We do not guarantee message delivery or API availability.</p>
+    </div>
+
+    <div class="block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Limitation of Liability</h2>
+        <p>We shall NOT be liable for any direct, indirect, incidental, or consequential damages. You assume all risk.</p>
+    </div>
+
+    <div class="block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Changes to Terms</h2>
+        <p>We may modify these Terms at any time. Continued use after changes constitutes acceptance.</p>
+    </div>
+</main>
+
+<footer class="footer">&copy; 2026 SMS Bomber NP. Educational purposes only. smsbombernp.vercel.app</footer>
+
+<script>
+function toggleTheme(){var h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');localStorage.setItem('theme',h.getAttribute('data-theme'))}
+(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})();
+</script>
+</body>
+</html>

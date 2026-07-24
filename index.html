@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <title>SMS Bomber NP — Educational SMS Tool for Nepal | smsbombernp.vercel.app</title>
+    <meta name="description" content="Educational SMS bombing demonstration tool for Nepal numbers. Learn how SMS flooding works. Supports NTC, Ncell, SmartCell.">
+    <meta name="keywords" content="SMS bomber Nepal, SMS flooding demo, educational SMS tool, Nepal SMS, smsbombernp">
+    <meta name="author" content="Laxman Poudel">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="SMS Bomber NP — Educational SMS Tool for Nepal">
+    <meta property="og:description" content="Educational SMS bombing demonstration tool. Learn how SMS flooding works.">
+    <meta property="og:url" content="https://smsbombernp.vercel.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://smsbombernp.vercel.app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <link rel="canonical" href="https://smsbombernp.vercel.app/">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta name="theme-color" content="#0f172a">
+
+    <style>
+        :root {
+            --bg: #f8fafc; --bg-alt: #ffffff; --bg-hover: #f1f5f9;
+            --text: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+            --border: #e2e8f0; --red: #dc2626; --red-hover: #b91c1c;
+            --red-light: #fef2f2; --blue: #1e40af; --blue-light: #eff6ff;
+            --green: #059669; --green-light: #d1fae5; --amber: #d97706;
+            --amber-light: #fffbeb; --radius: 8px; --shadow: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.06); --transition: 0.2s ease;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0b1120; --bg-alt: #111827; --bg-hover: #1e293b;
+            --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+            --border: #1e293b; --red: #ef4444; --red-hover: #dc2626;
+            --red-light: #450a0a; --blue: #3b82f6; --blue-light: #172554;
+            --green-light: #064e3b; --amber-light: #451a03;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0b1120; --bg-alt: #111827; --bg-hover: #1e293b;
+                --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+                --border: #1e293b; --red: #ef4444; --red-hover: #dc2626;
+                --red-light: #450a0a; --blue: #3b82f6; --blue-light: #172554;
+                --green-light: #064e3b; --amber-light: #451a03;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font); background: var(--bg); color: var(--text);
+            line-height: 1.6; -webkit-font-smoothing: antialiased;
+            transition: background 0.4s, color 0.4s; min-height: 100vh;
+            display: flex; flex-direction: column; overflow-x: hidden;
+        }
+        .container { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        .anim-fade-up { animation: fadeUp 0.55s ease forwards; }
+        .anim-fade-in { animation: fadeIn 0.5s ease forwards; }
+        .anim-scale { animation: scaleIn 0.4s ease forwards; }
+        .anim-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .anim-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .anim-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .anim-delay-4 { animation-delay: 0.4s; opacity: 0; }
+        .anim-delay-5 { animation-delay: 0.5s; opacity: 0; }
+
+        /* NAV */
+        .nav {
+            position: sticky; top: 0; z-index: 100; height: 56px;
+            background: rgba(248,250,252,0.85); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border); animation: fadeIn 0.4s ease;
+        }
+        [data-theme="dark"] .nav { background: rgba(11,17,32,0.88); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+        .nav-logo { font-weight: 800; font-size: 1rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: var(--transition); }
+        .nav-logo:hover { opacity: 0.75; }
+        .nav-logo img { width: 28px; height: 28px; border-radius: 5px; }
+        .nav-logo em { font-style: normal; color: var(--red); }
+        .nav-links { display: flex; gap: 2px; list-style: none; }
+        .nav-links a { padding: 7px 13px; border-radius: 6px; color: var(--text-secondary); font-size: 0.83rem; font-weight: 500; text-decoration: none; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%) scaleX(0); width: 18px; height: 2px; background: var(--red); border-radius: 1px; transition: transform 0.2s ease; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { transform: translateX(-50%) scaleX(1); }
+        .nav-end { display: flex; align-items: center; gap: 6px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 5px; padding: 8px 18px;
+            border-radius: var(--radius); font-size: 0.82rem; font-weight: 600;
+            cursor: pointer; transition: var(--transition); text-decoration: none;
+            border: 1.5px solid transparent; font-family: var(--font); position: relative; overflow: hidden;
+        }
+        .btn::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: rgba(255,255,255,0.2); transform: translate(-50%, -50%); transition: width 0.5s, height 0.5s; }
+        .btn:active::after { width: 300px; height: 300px; }
+        .btn-red { background: var(--red); color: #fff; }
+        .btn-red:hover { background: var(--red-hover); box-shadow: 0 0 16px rgba(220,38,38,0.25); transform: translateY(-1px); }
+        .btn-ghost { background: transparent; border-color: var(--border); color: var(--text); }
+        .btn-ghost:hover { background: var(--bg-hover); border-color: var(--red); transform: translateY(-1px); }
+        .btn-green { background: var(--green); color: #fff; width: 100%; justify-content: center; padding: 10px; }
+        .btn-green:hover:not(:disabled) { background: #047857; transform: translateY(-1px); }
+        .btn-green:disabled { opacity: 0.5; cursor: not-allowed; }
+        .icon-btn {
+            width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border);
+            background: transparent; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; color: var(--text-secondary); transition: var(--transition);
+        }
+        .icon-btn:hover { background: var(--bg-hover); color: var(--text); transform: rotate(25deg); }
+        .icon-btn svg { width: 14px; height: 14px; }
+        .burger { display: none; width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid var(--border); background: transparent; cursor: pointer; align-items: center; justify-content: center; color: var(--text); transition: var(--transition); }
+        .burger:hover { background: var(--bg-hover); }
+        .burger svg { width: 18px; height: 18px; }
+
+        /* MOBILE */
+        .m-menu {
+            position: fixed; top: 0; right: -300px; width: 280px; height: 100vh;
+            background: var(--bg-alt); z-index: 200; transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column;
+            border-left: 1px solid var(--border);
+        }
+        .m-menu.open { right: 0; }
+        .m-menu-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+        .m-menu-top span { font-weight: 700; }
+        .m-close { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--text); transition: var(--transition); }
+        .m-close:hover { background: var(--bg-hover); transform: rotate(90deg); }
+        .m-links { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+        .m-links a { padding: 14px 16px; border-radius: 8px; color: var(--text); font-size: 0.94rem; font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--border); transition: var(--transition); }
+        .m-links a:hover { background: var(--bg-hover); padding-left: 20px; }
+        .m-links a:last-child { border-bottom: none; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 150; }
+        .overlay.on { display: block; animation: fadeIn 0.25s ease; }
+
+        /* HERO */
+        .hero { padding: 64px 0 48px; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .hero-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; background: var(--red-light); color: var(--red); font-weight: 600; font-size: 0.7rem; width: fit-content; margin-bottom: 14px; }
+        .hero h1 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 12px; }
+        .hero h1 mark { background: none; color: var(--red); }
+        .hero p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; margin-bottom: 22px; }
+        .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .hero-card {
+            background: var(--bg-alt); border: 1.5px solid var(--border);
+            border-radius: 14px; padding: 24px 20px; text-align: center;
+            box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+            transition: var(--transition);
+        }
+        .hero-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+        .hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red), var(--blue)); }
+        .hero-card .big-icon { width: 52px; height: 52px; border-radius: 12px; background: var(--red-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; transition: var(--transition); }
+        .hero-card:hover .big-icon { animation: pulse 0.5s ease; }
+        .hero-card .big-icon svg { width: 24px; height: 24px; color: var(--red); }
+        .hero-card h3 { font-weight: 700; margin-bottom: 4px; }
+        .hero-card .sub { color: var(--text-secondary); font-size: 0.82rem; }
+        .hero-mini { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 12px; }
+        .hero-mini div { background: var(--bg-hover); border-radius: 6px; padding: 8px; text-align: center; transition: var(--transition); }
+        .hero-mini div:hover { background: var(--red-light); }
+        .hero-mini .big { font-weight: 700; color: var(--red); font-size: 1rem; }
+        .hero-mini .small { font-size: 0.6rem; color: var(--text-muted); }
+
+        /* BANNER */
+        .banner {
+            background: linear-gradient(135deg, var(--red-light), var(--blue-light));
+            border: 1px solid var(--border); border-radius: 12px;
+            padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+            max-width: 700px; margin: 0 auto 50px; animation: scaleIn 0.5s ease;
+        }
+        .banner svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--red); }
+        .banner strong { display: block; font-size: 0.85rem; }
+        .banner span { font-size: 0.76rem; color: var(--text-secondary); }
+
+        /* SECTIONS */
+        .sec { padding: 50px 0; }
+        .sec-title { text-align: center; margin-bottom: 30px; }
+        .sec-title h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+        .sec-title p { color: var(--text-secondary); font-size: 0.86rem; margin-top: 4px; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+        .feat {
+            background: var(--bg-alt); border: 1px solid var(--border);
+            border-radius: 10px; padding: 18px; transition: var(--transition);
+        }
+        .feat:hover { border-color: var(--red); box-shadow: var(--shadow); transform: translateY(-2px); }
+        .feat-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--red-light); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; transition: var(--transition); }
+        .feat:hover .feat-icon { background: var(--red); }
+        .feat:hover .feat-icon svg { color: #fff; }
+        .feat-icon svg { width: 16px; height: 16px; color: var(--red); transition: color 0.2s; }
+        .feat h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 3px; }
+        .feat p { color: var(--text-secondary); font-size: 0.78rem; line-height: 1.45; }
+
+        .shield-box {
+            background: var(--bg-alt); border: 2px solid var(--border);
+            border-radius: 14px; padding: 24px; max-width: 440px; margin: 0 auto;
+            box-shadow: var(--shadow-lg); transition: var(--transition);
+        }
+        .shield-box:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+        .shield-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; border: 2px solid var(--green); transition: var(--transition); }
+        .shield-box:hover .shield-icon { animation: pulse 0.5s ease; }
+        .shield-icon svg { width: 22px; height: 22px; color: var(--green); }
+        .shield-box h3 { text-align: center; font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
+        .field { margin-bottom: 10px; }
+        .field label { display: block; font-size: 0.74rem; font-weight: 600; margin-bottom: 4px; }
+        .field-row { display: flex; gap: 6px; }
+        .field-pfx { display: flex; align-items: center; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--bg-hover); color: var(--text-secondary); font-weight: 600; font-size: 0.76rem; white-space: nowrap; }
+        .field-inp { flex: 1; min-width: 0; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 0.82rem; font-family: var(--font); background: var(--bg); color: var(--text); outline: none; transition: var(--transition); }
+        .field-inp:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(220,38,38,0.05); }
+        .field-err { font-size: 0.66rem; color: var(--red); margin-top: 2px; display: none; }
+        .field-ok { font-size: 0.66rem; color: var(--green); margin-top: 2px; display: none; }
+        .count { text-align: right; font-size: 0.64rem; color: var(--text-muted); margin-top: 2px; }
+
+        .steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .step { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; transition: var(--transition); }
+        .step:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+        .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--red-light); color: var(--red); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; font-weight: 700; font-size: 0.78rem; transition: var(--transition); }
+        .step:hover .step-num { background: var(--red); color: #fff; }
+        .step h4 { font-size: 0.78rem; font-weight: 700; margin-bottom: 2px; }
+        .step p { color: var(--text-secondary); font-size: 0.7rem; }
+
+        .footer { border-top: 1px solid var(--border); background: var(--bg-alt); padding: 24px 0 16px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 18px; }
+        .footer h5 { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; margin-bottom: 8px; }
+        .footer a, .footer p { color: var(--text-secondary); font-size: 0.76rem; text-decoration: none; display: block; padding: 2px 0; transition: var(--transition); }
+        .footer a:hover { color: var(--red); padding-left: 4px; }
+        .footer-end { text-align: center; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.68rem; }
+
+        .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); padding: 10px 18px; border-radius: var(--radius); font-weight: 600; font-size: 0.76rem; z-index: 300; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; animation: fadeUp 0.3s ease; }
+        .toast.ok { background: var(--green); color: #fff; }
+        .toast.err { background: var(--red); color: #fff; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .burger { display: flex; }
+            .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+            .hero-card { order: -1; }
+            .hero { padding: 36px 0 30px; }
+            .hero h1 { font-size: 1.5rem; }
+            .hero-actions .btn { padding: 11px 20px; font-size: 0.84rem; }
+            .steps-row { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .sec { padding: 36px 0; }
+            .shield-box { max-width: 100%; }
+            .banner { flex-direction: column; text-align: center; }
+        }
+        @media (max-width: 400px) {
+            .hero-actions { flex-direction: column; }
+            .hero-actions .btn { width: 100%; justify-content: center; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .shield-box { padding: 18px 14px; }
+            .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="container nav-inner">
+        <a href="/" class="nav-logo"><img src="/favicon/favicon-96x96.png" alt="">SMS<em>Bomber</em>NP</a>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#shield">Shield</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="nav-end">
+            <button class="icon-btn" onclick="toggleTheme()" aria-label="Theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+            <button class="burger" onclick="openMobile()" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+        </div>
+    </div>
+</nav>
+
+<div class="overlay" id="overlay" onclick="closeMobile()"></div>
+<div class="m-menu" id="mMenu">
+    <div class="m-menu-top"><span>Menu</span><button class="m-close" onclick="closeMobile()">✕</button></div>
+    <div class="m-links">
+        <a href="#features" onclick="closeMobile()">Features</a>
+        <a href="#shield" onclick="closeMobile()">Shield Number</a>
+        <a href="#how" onclick="closeMobile()">How It Works</a>
+        <a href="about.html" onclick="closeMobile()">About</a>
+        <a href="send-sms-np.html" class="btn btn-red" style="margin-top:10px;justify-content:center">Launch Demo</a>
+    </div>
+</div>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-tag anim-fade-in">Educational Demonstration Only</div>
+                    <h1 class="anim-fade-up anim-delay-1">Understand <mark>SMS Flooding</mark> Attacks</h1>
+                    <p class="anim-fade-up anim-delay-2">A security research tool demonstrating how SMS bombing works on Nepal numbers. Learn to protect yourself. For educational purposes only.</p>
+                    <div class="hero-actions anim-fade-up anim-delay-3">
+                        <a href="send-sms-np.html" class="btn btn-red">Launch Demonstration</a>
+                        <a href="#shield" class="btn btn-ghost">Shield My Number</a>
+                    </div>
+                </div>
+                <div class="hero-card anim-scale anim-delay-2">
+                    <div class="big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                    <h3>6+ SMS Gateways</h3><p class="sub">Multiple providers demonstrate how SMS flooding occurs.</p>
+                    <div class="hero-mini"><div><div class="big">6+</div><div class="small">Gateways</div></div><div><div class="big">3</div><div class="small">Carriers</div></div><div><div class="big">NP</div><div class="small">Nepal Only</div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="features" style="height:1px;margin-top:-56px"></div>
+    <section class="sec">
+        <div class="container">
+            <div class="sec-title"><h2>What This Tool Demonstrates</h2><p>Understanding SMS flooding for better security awareness.</p></div>
+            <div class="grid-3">
+                <div class="feat anim-fade-up anim-delay-1"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Multi-Gateway</h3><p>See how multiple SMS gateways flood a single number simultaneously.</p></div>
+                <div class="feat anim-fade-up anim-delay-2"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Anonymous</h3><p>No registration needed — understand how attackers operate anonymously.</p></div>
+                <div class="feat anim-fade-up anim-delay-3"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M2 12h20"/></svg></div><h3>All Carriers</h3><p>NTC, Ncell, SmartCell — see how no carrier is immune to flooding.</p></div>
+                <div class="feat anim-fade-up anim-delay-4"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/></svg></div><h3>Bulk Mode</h3><p>Demonstrate targeting multiple numbers with a single click.</p></div>
+                <div class="feat anim-fade-up anim-delay-5"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Number Shield</h3><p>Permanently protect your number from our demonstration system.</p></div>
+                <div class="feat anim-fade-up anim-delay-5"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><h3>PWA Ready</h3><p>Install as a native app. Works offline after first load.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div><strong>Permanent Protection Notice</strong><span>Once your number is added to our shield list, it will be permanently protected. This cannot be undone.</span></div>
+        </div>
+    </div>
+
+    <div id="shield" style="height:1px;margin-top:-56px"></div>
+    <section class="sec">
+        <div class="container">
+            <div class="sec-title"><h2>Shield Your Number</h2><p>Permanently protect your phone from SMS flooding demonstrations.</p></div>
+            <div class="shield-box anim-scale">
+                <div class="shield-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <h3>Activate Protection</h3>
+                <div class="field"><label>Phone Number</label><div class="field-row"><span class="field-pfx">+977</span><input type="text" class="field-inp" id="shieldPhone" placeholder="98XXXXXXXX" maxlength="10" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'');document.getElementById('charCount').textContent=this.value.length+'/10';validateShield()"></div><div class="count" id="charCount">0/10</div><div class="field-err" id="shieldPhoneError"></div><div class="field-ok" id="shieldPhoneSuccess"></div></div>
+                <div class="field"><label>Your Name</label><input type="text" class="field-inp" id="shieldName" placeholder="Enter your full name" autocomplete="off" oninput="validateShield()"></div>
+                <button class="btn btn-green" id="shieldBtn" onclick="activateShield()" disabled>Activate Shield</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="how" style="height:1px;margin-top:-56px"></div>
+    <section class="sec">
+        <div class="container">
+            <div class="sec-title"><h2>How Protection Works</h2><p>Simple 4-step process to permanently secure your number.</p></div>
+            <div class="steps-row">
+                <div class="step anim-fade-up anim-delay-1"><div class="step-num">1</div><h4>Instant Activation</h4><p>Shield starts immediately after verification.</p></div>
+                <div class="step anim-fade-up anim-delay-2"><div class="step-num">2</div><h4>Secure Database</h4><p>Number added to encrypted protection list.</p></div>
+                <div class="step anim-fade-up anim-delay-3"><div class="step-num">3</div><h4>Active Monitoring</h4><p>System detects and blocks flooding attempts.</p></div>
+                <div class="step anim-fade-up anim-delay-4"><div class="step-num">4</div><h4>Lifetime Shield</h4><p>Permanent protection that never expires.</p></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><h5>SMS Bomber NP</h5><p>Educational security research tool. Demonstrating SMS flooding for awareness. Use at your own risk.</p></div>
+            <div><h5>Navigate</h5><a href="send-sms-np.html">Demo Tool</a><a href="#shield">Shield Number</a></div>
+            <div><h5>Learn More</h5><a href="about.html">About Developer</a><a href="#how">How It Works</a></div>
+            <div><h5>Legal</h5><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a></div>
+        </div>
+        <div class="footer-end">&copy; 2026 SMS Bomber NP by Laxman Poudel. Educational purposes only. smsbombernp.vercel.app</div>
+    </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+    const fc = { apiKey: "AIzaSyAxQ0_nu_g0ivWMc820w-mqRpq8JklxUoA", authDomain: "sms-bomber-629df.firebaseapp.com", databaseURL: "https://sms-bomber-629df-default-rtdb.firebaseio.com", projectId: "sms-bomber-629df", storageBucket: "sms-bomber-629df.firebasestorage.app", messagingSenderId: "61309414303", appId: "1:61309414303:web:59a2f5da91cfe9ecc86baa" };
+    const app = initializeApp(fc); const db = getDatabase(app);
+    function VP(n) { var c = n.replace(/[^0-9]/g, ''); if(c.startsWith('977'))c=c.slice(3); var vp=['984','985','986','974','975','976','980','981','982','961','962','988','972','973','970']; return c.length===10 && (c.startsWith('98')||c.startsWith('97')) && vp.indexOf(c.slice(0,3))!==-1 ? c : null; }
+    function ST(m,t){ var x=document.getElementById('toast'); x.textContent=m; x.className='toast '+(t==='ok'?'ok':'err'); x.style.display='block'; setTimeout(function(){x.style.display='none'},3500); }
+    window.validateShield = function(){ var p=document.getElementById('shieldPhone').value, n=document.getElementById('shieldName').value, v=VP(p); var e=document.getElementById('shieldPhoneError'), s=document.getElementById('shieldPhoneSuccess'); e.style.display='none'; s.style.display='none'; if(p&&!v){e.textContent='Invalid Nepal number';e.style.display='block'} if(v){s.textContent='Valid number';s.style.display='block'} document.getElementById('shieldBtn').disabled=!(v&&n.trim().length>0); };
+    window.activateShield = async function(){ var p=VP(document.getElementById('shieldPhone').value), n=document.getElementById('shieldName').value.trim(); if(!p||!n)return; var b=document.getElementById('shieldBtn'); b.disabled=true; b.textContent='Activating...'; try{var r=ref(db,'protected_numbers/'+p); var s=await get(r); if(s.exists()){ST('Already protected!','err');b.disabled=false;b.textContent='Activate Shield';return} await set(r,{phone:p,name:n,protected_at:new Date().toISOString(),status:'active'}); ST('Shield activated!','ok');document.getElementById('shieldPhone').value='';document.getElementById('shieldName').value='';document.getElementById('charCount').textContent='0/10';document.getElementById('shieldPhoneSuccess').style.display='none';b.textContent='Protected ✓';b.style.background='var(--green)'} catch(e){ST('Failed','err');b.disabled=false;b.textContent='Activate Shield'} };
+</script>
+
+<script>
+    function toggleTheme(){var h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');localStorage.setItem('theme',h.getAttribute('data-theme'))}
+    (function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})();
+    function openMobile(){document.getElementById('mMenu').classList.add('open');document.getElementById('overlay').classList.add('on')}
+    function closeMobile(){document.getElementById('mMenu').classList.remove('open');document.getElementById('overlay').classList.remove('on')}
+    document.querySelectorAll('a[href^="#"]').forEach(function(l){l.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-56,behavior:'smooth'})}})});
+</script>
+</body>
+</html>

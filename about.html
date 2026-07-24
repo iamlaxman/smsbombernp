@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <title>About — SMS Bomber NP | smsbombernp.vercel.app</title>
+    <meta name="description" content="About Laxman Poudel, the developer behind SMS Bomber NP. Educational security research tool for Nepal.">
+    <meta name="author" content="Laxman Poudel">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="About — SMS Bomber NP">
+    <meta property="og:description" content="About the developer behind SMS Bomber NP. Educational security research tool.">
+    <meta property="og:url" content="https://smsbombernp.vercel.app/about.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://smsbombernp.vercel.app/og-image.png">
+    
+    <link rel="canonical" href="https://smsbombernp.vercel.app/about.html">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta name="theme-color" content="#0f172a">
+
+    <style>
+        :root {
+            --bg: #f8fafc; --bg-secondary: #ffffff; --bg-tertiary: #f1f5f9;
+            --text: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+            --border: #e2e8f0; --primary: #dc2626; --primary-hover: #b91c1c;
+            --primary-light: #fef2f2; --accent: #1e40af; --accent-light: #eff6ff;
+            --success: #059669; --success-light: #d1fae5;
+            --radius: 8px; --radius-lg: 12px; --radius-xl: 16px;
+            --shadow: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 4px 12px rgba(0,0,0,0.06);
+            --transition: 0.2s ease;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0b1120; --bg-secondary: #111827; --bg-tertiary: #1e293b;
+            --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+            --border: #1e293b; --primary: #ef4444; --primary-hover: #dc2626;
+            --primary-light: #450a0a; --accent: #3b82f6; --accent-light: #172554;
+            --success-light: #064e3b;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0b1120; --bg-secondary: #111827; --bg-tertiary: #1e293b;
+                --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+                --border: #1e293b; --primary: #ef4444; --primary-hover: #dc2626;
+                --primary-light: #450a0a; --accent: #3b82f6; --accent-light: #172554;
+                --success-light: #064e3b;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: var(--font); background: var(--bg); color: var(--text);
+            line-height: 1.7; -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s; min-height: 100vh;
+            display: flex; flex-direction: column;
+            overflow-x: hidden; word-wrap: break-word; overflow-wrap: break-word;
+        }
+        .bg-pattern {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1; opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23000' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .navbar {
+            position: sticky; top: 0; z-index: 100; width: 100%;
+            background: rgba(248,250,252,0.88); backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+        [data-theme="dark"] .navbar { background: rgba(11,17,32,0.9); }
+        @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .navbar { background: rgba(11,17,32,0.9); } }
+        .nav-inner {
+            width: 100%; max-width: 780px; margin: 0 auto; padding: 0 16px;
+            display: flex; align-items: center; justify-content: space-between; height: 56px;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: clamp(0.85rem, 2.5vw, 1rem); color: var(--text); text-decoration: none; flex-shrink: 0; }
+        .nav-brand img { width: 26px; height: 26px; border-radius: 5px; flex-shrink: 0; }
+        .nav-brand span { color: var(--primary); }
+        .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .nav-back {
+            display: flex; align-items: center; gap: 4px; color: var(--text-secondary);
+            font-size: clamp(0.72rem, 2vw, 0.82rem); font-weight: 500; text-decoration: none;
+            padding: 6px 10px; border-radius: 6px; transition: var(--transition); white-space: nowrap;
+        }
+        .nav-back:hover { background: var(--bg-tertiary); color: var(--text); }
+        .nav-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+        .theme-btn {
+            width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--border);
+            background: transparent; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; color: var(--text-secondary); flex-shrink: 0;
+        }
+        .theme-btn:hover { background: var(--bg-tertiary); color: var(--text); }
+        .theme-btn svg { width: 13px; height: 13px; }
+
+        .content {
+            width: 100%; max-width: 780px; margin: 0 auto; padding: 24px 16px 48px;
+            flex: 1;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            text-align: center; padding: 20px 0 30px;
+        }
+        .avatar {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px; font-size: 2.4rem; font-weight: 800; color: #fff;
+            box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--primary);
+        }
+        .about-hero h1 { font-size: clamp(1.3rem, 3.5vw, 1.6rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+        .about-hero .role {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            background: var(--primary-light); color: var(--primary);
+            font-weight: 600; font-size: 0.75rem; margin-bottom: 12px;
+        }
+        .about-hero .bio {
+            color: var(--text-secondary); font-size: clamp(0.85rem, 2vw, 0.92rem);
+            max-width: 520px; margin: 0 auto; line-height: 1.65;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            max-width: 400px; margin: 24px auto;
+        }
+        .stat-item {
+            background: var(--bg-secondary); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 14px 10px; text-align: center;
+        }
+        .stat-item .val { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+        .stat-item .lbl { font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* Sections */
+        .section { margin-bottom: 20px; }
+        .section h2 {
+            font-size: clamp(0.9rem, 2.5vw, 1rem); font-weight: 700;
+            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+        }
+        .section h2 svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; }
+
+        /* Cards */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .card {
+            background: var(--bg-secondary); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 16px; transition: var(--transition);
+        }
+        .card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+        .card h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+        .card p { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.5; }
+
+        /* Links */
+        .link-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+        .link-btn {
+            display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px;
+            border-radius: var(--radius); font-size: 0.8rem; font-weight: 600;
+            text-decoration: none; transition: var(--transition);
+            border: 1.5px solid var(--border); background: var(--bg-secondary); color: var(--text);
+        }
+        .link-btn:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); transform: translateY(-1px); }
+        .link-btn svg { width: 15px; height: 15px; }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: var(--primary-light); border: 1px solid var(--primary);
+            border-radius: var(--radius-lg); padding: 16px 18px; margin-top: 20px;
+        }
+        .disclaimer h3 { font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        .disclaimer p { font-size: 0.78rem; color: var(--primary); opacity: 0.85; }
+
+        .footer {
+            text-align: center; padding: 16px; font-size: 0.68rem;
+            color: var(--text-muted); border-top: 1px solid var(--border); margin-top: auto;
+        }
+
+        @media (max-width: 480px) {
+            .nav-inner { padding: 0 10px; height: 50px; }
+            .content { padding: 16px 10px 32px; }
+            .stats-row { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+            <img src="/favicon/favicon-96x96.png" alt="Logo" width="26" height="26">SMS<span>Bomber</span>NP
+        </a>
+        <div class="nav-actions">
+            <a href="index.html" class="nav-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Back
+            </a>
+            <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main class="content">
+
+    <div class="about-hero">
+        <div class="avatar">LP</div>
+        <h1>Laxman Poudel</h1>
+        <div class="role">Full-Stack Developer & Security Researcher</div>
+        <p class="bio">Building open-source tools that educate and empower. Passionate about cybersecurity, web technologies, and creating practical solutions for Nepal's developer community.</p>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-item"><div class="val">5+</div><div class="lbl">Years Coding</div></div>
+        <div class="stat-item"><div class="val">NP</div><div class="lbl">Based in Nepal</div></div>
+        <div class="stat-item"><div class="val">OSS</div><div class="lbl">Open Source</div></div>
+    </div>
+
+    <div class="section">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="3"/></svg>About This Project</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Educational Purpose</h3>
+                <p>SMS Bomber NP demonstrates how SMS flooding attacks work, helping developers and security researchers understand the mechanics behind such attacks.</p>
+            </div>
+            <div class="card">
+                <h3>Security Awareness</h3>
+                <p>By understanding how SMS bombing works, users can better protect themselves and their numbers from real-world attacks.</p>
+            </div>
+            <div class="card">
+                <h3>Open Source</h3>
+                <p>This project is MIT licensed. Anyone can study the code, contribute improvements, or fork it for their own learning.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M2 12h20"/></svg>Tech Stack</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Frontend</h3>
+                <p>Pure HTML, CSS, and JavaScript. No frameworks. No build steps. Instant loading.</p>
+            </div>
+            <div class="card">
+                <h3>Backend</h3>
+                <p>Cloudflare Workers for secure API proxying. Firebase RTDB for protected numbers and logging.</p>
+            </div>
+            <div class="card">
+                <h3>Security</h3>
+                <p>Cloudflare Turnstile for bot protection. Server-side token verification. No user data stored.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"/></svg>Connect</h2>
+        <div class="link-grid">
+            <a href="https://github.com/iamlaxman" target="_blank" rel="noopener" class="link-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+                GitHub
+            </a>
+            <a href="https://laxman-poudel.com.np" target="_blank" rel="noopener" class="link-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Website
+            </a>
+            <a href="mailto:hello@laxman-poudel.com.np" class="link-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+                Email
+            </a>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        <h3>Project Disclaimer</h3>
+        <p>SMS Bomber NP is an educational security research tool. It demonstrates SMS flooding techniques for learning purposes only. The developer is not responsible for any misuse. Always test on your own numbers. Use responsibly and ethically.</p>
+    </div>
+
+</main>
+
+<footer class="footer">&copy; 2026 SMS Bomber NP by Laxman Poudel. smsbombernp.vercel.app</footer>
+
+<script>
+function toggleTheme(){var h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');localStorage.setItem('theme',h.getAttribute('data-theme'))}
+(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})();
+</script>
+</body>
+</html>
