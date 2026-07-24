@@ -169,19 +169,19 @@
     <div class="warning-bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Test only on your own number. Educational purposes only.</div>
 
     <div class="tabs">
-        <button class="tab active" onclick="switchTab('single')">Single Number</button>
-        <button class="tab" onclick="switchTab('bulk')">Bulk Numbers</button>
+        <button class="tab active" id="tabSingleBtn">Single Number</button>
+        <button class="tab" id="tabBulkBtn">Bulk Numbers</button>
     </div>
 
     <!-- SINGLE TAB -->
     <div class="tab-content active" id="tab-single">
         <div class="card">
             <div class="card-header"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><h2>Single Number</h2></div>
-            <div class="input-group"><label class="input-label">Phone Number</label><input type="text" class="input-field" id="phone" placeholder="98XXXXXXXX" maxlength="10" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'');validateSingle()"><div class="input-error" id="phoneError"></div><div class="input-success" id="phoneOk"></div></div>
-            <div class="input-group"><label class="input-label">Number of Messages</label><input type="number" class="input-field" id="count" value="1" min="1" max="20" ><div class="input-hint">Max 20 messages</div></div>
-            <div class="checkbox-group"><input type="checkbox" id="agreeSingle" onchange="validateSingle()"><label for="agreeSingle">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
-            <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileSingle" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW" data-callback="onSingleCaptcha" data-expired-callback="onSingleCaptchaExpired"></div></div>
-            <button class="btn btn-primary" id="btnSingle" onclick="startSingle()" disabled>Send Messages</button>
+            <div class="input-group"><label class="input-label">Phone Number</label><input type="text" class="input-field" id="phone" placeholder="98XXXXXXXX" maxlength="10" autocomplete="off"><div class="input-error" id="phoneError"></div><div class="input-success" id="phoneOk"></div></div>
+            <div class="input-group"><label class="input-label">Number of Messages</label><input type="number" class="input-field" id="count" value="1" min="1" max="20"><div class="input-hint">Max 20 messages</div></div>
+            <div class="checkbox-group"><input type="checkbox" id="agreeSingle"><label for="agreeSingle">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
+            <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileSingle" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW"></div></div>
+            <button class="btn btn-primary" id="btnSingle" disabled>Send Messages</button>
         </div>
     </div>
 
@@ -189,11 +189,11 @@
     <div class="tab-content" id="tab-bulk">
         <div class="card">
             <div class="card-header"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/></svg></div><h2>Bulk Numbers</h2></div>
-            <div class="input-group"><label class="input-label">Phone Numbers (one per line)</label><textarea class="input-field" id="bulkNumbers" placeholder="9867844454&#10;9842308880" oninput="validateBulk()"></textarea><div class="input-hint" id="bulkCount"></div></div>
-            <div class="input-group"><label class="input-label">Messages per Number</label><input type="number" class="input-field" id="bulkPerNum" value="1" min="1" max="5" ><div class="input-hint">Max 5 per number</div></div>
-            <div class="checkbox-group"><input type="checkbox" id="agreeBulk" onchange="validateBulk()"><label for="agreeBulk">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
-            <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileBulk" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW" data-callback="onBulkCaptcha" data-expired-callback="onBulkCaptchaExpired"></div></div>
-            <button class="btn btn-primary" id="btnBulk" onclick="startBulk()" disabled>Send Bulk Messages</button>
+            <div class="input-group"><label class="input-label">Phone Numbers (one per line)</label><textarea class="input-field" id="bulkNumbers" placeholder="9867844454&#10;9842308880"></textarea><div class="input-hint" id="bulkCount"></div></div>
+            <div class="input-group"><label class="input-label">Messages per Number</label><input type="number" class="input-field" id="bulkPerNum" value="1" min="1" max="5"><div class="input-hint">Max 5 per number</div></div>
+            <div class="checkbox-group"><input type="checkbox" id="agreeBulk"><label for="agreeBulk">I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label></div>
+            <div class="captcha-wrap"><div class="cf-turnstile" id="turnstileBulk" data-sitekey="0x4AAAAAAD7S1fLfF6jUjYZW"></div></div>
+            <button class="btn btn-primary" id="btnBulk" disabled>Send Bulk Messages</button>
         </div>
     </div>
 
@@ -205,7 +205,7 @@
     </div>
 
     <div class="terminal">
-        <div class="terminal-head">Output Log <button class="btn" style="width:auto;padding:2px 10px;font-size:0.6rem;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer" onclick="clearTerm()">Clear</button></div>
+        <div class="terminal-head">Output Log <button class="btn" style="width:auto;padding:2px 10px;font-size:0.6rem;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer" id="clearTermBtn">Clear</button></div>
         <div class="terminal-body" id="terminal"><div class="log-entry"><span class="log-time">--:--</span><span class="log-info">Ready. Enter a number and complete verification.</span></div></div>
     </div>
 
@@ -236,11 +236,6 @@
     var sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
     var WORKER_URL = "https://smsbomber.ethical-laxman.workers.dev/";
 
-    window.onSingleCaptcha = function(t) { singleCaptcha = true; validateSingle(); };
-    window.onSingleCaptchaExpired = function() { singleCaptcha = false; validateSingle(); };
-    window.onBulkCaptcha = function(t) { bulkCaptcha = true; validateBulk(); };
-    window.onBulkCaptchaExpired = function() { bulkCaptcha = false; validateBulk(); };
-
     function VP(n) { var c = n.replace(/[^0-9]/g, ''); if(c.startsWith('977'))c=c.slice(3); var vp=['984','985','986','974','975','976','980','981','982','961','962','988','972','973','970']; return c.length===10 && (c.startsWith('98')||c.startsWith('97')) && vp.indexOf(c.slice(0,3))!==-1 ? c : null; }
 
     function log(m, t) {
@@ -260,7 +255,7 @@
             var logData = { phone:phone, status:status, gateway:gateway||'auto', timestamp:new Date().toISOString(), userAgent:navigator.userAgent.substring(0,200), referrer:document.referrer||'direct', sessionId:sessionId, requestCount:stats.sent+1 };
             await push(ref(db,'sms_logs'), logData);
             await set(ref(db,'sessions/'+sessionId), { phone:phone, startedAt:new Date().toISOString(), requestCount:stats.sent+1, deliveredCount:stats.ok+(status==='delivered'?1:0), failedCount:stats.fail+(status==='failed'?1:0), blockedCount:stats.blocked+(status==='blocked'?1:0), userAgent:navigator.userAgent.substring(0,200), referrer:document.referrer||'direct', status:'active', lastUpdated:new Date().toISOString() });
-        } catch(e) { console.error('Firebase error:', e); }
+        } catch(e) {}
     }
 
     async function checkProtected(phone) { try { var s = await get(ref(db,'protected_numbers/'+phone)); return s.exists(); } catch(e) { return false; } }
@@ -286,36 +281,80 @@
         } catch(e) { await logToFirebase(phone,'failed','network_error'); return {ok:false,msg:"Network error"}; }
     }
 
-    function validateSingle() { var p=document.getElementById('phone').value,v=VP(p),e=document.getElementById('phoneError'),s=document.getElementById('phoneOk'); e.style.display='none';s.style.display='none'; if(p&&!v){e.textContent='Invalid Nepal number';e.style.display='block'} if(v){s.textContent='Valid number';s.style.display='block'} document.getElementById('btnSingle').disabled=!(v&&document.getElementById('agreeSingle').checked&&singleCaptcha&&!isRunning); }
-    function validateBulk() { var nums=document.getElementById('bulkNumbers').value.split(/[\n,;\s]+/).filter(function(l){return l.trim()}).filter(function(l){return VP(l.trim())}); document.getElementById('bulkCount').textContent=nums.length+' valid numbers'; document.getElementById('btnBulk').disabled=!(nums.length>0&&document.getElementById('agreeBulk').checked&&bulkCaptcha&&!isRunning); }
+    function validateSingle() {
+        var p = document.getElementById('phone').value, v = VP(p);
+        var e = document.getElementById('phoneError'), s = document.getElementById('phoneOk');
+        e.style.display='none'; s.style.display='none';
+        if(p && !v) { e.textContent='Invalid Nepal number'; e.style.display='block'; }
+        if(v) { s.textContent='Valid number'; s.style.display='block'; }
+        document.getElementById('btnSingle').disabled = !(v && document.getElementById('agreeSingle').checked && singleCaptcha && !isRunning);
+    }
 
-    window.startSingle = async function() {
-        if(isRunning)return;var p=VP(document.getElementById('phone').value);if(!p)return;var n=parseInt(document.getElementById('count').value)||1;if(n>20)n=20;
-        isRunning=true;var btn=document.getElementById('btnSingle');btn.disabled=true;btn.textContent='Sending...';
+    function validateBulk() {
+        var nums = document.getElementById('bulkNumbers').value.split(/[\n,;\s]+/).filter(function(l){return l.trim()}).filter(function(l){return VP(l.trim())});
+        document.getElementById('bulkCount').textContent = nums.length + ' valid numbers';
+        document.getElementById('btnBulk').disabled = !(nums.length>0 && document.getElementById('agreeBulk').checked && bulkCaptcha && !isRunning);
+    }
+
+    async function startSingle() {
+        if(isRunning)return; var p=VP(document.getElementById('phone').value); if(!p)return;
+        var n=parseInt(document.getElementById('count').value)||1; if(n>20)n=20;
+        isRunning=true; var btn=document.getElementById('btnSingle'); btn.disabled=true; btn.textContent='Sending...';
         log('Starting '+n+' messages to +977-'+p,'log-info');
         for(var i=1;i<=n;i++){var r=await sendOneMessage(p,'#turnstileSingle');stats.sent++;if(r.ok){stats.ok++;log('#'+i+' Delivered','ok')}else{stats.fail++;log('#'+i+' '+r.msg,'err')}US();if(i<n)await new Promise(function(r){setTimeout(r,1500)})}
-        log('Done. '+stats.ok+' delivered, '+stats.fail+' failed, '+stats.blocked+' blocked.','ok');isRunning=false;btn.textContent='Send Messages';btn.disabled=false;turnstile.reset('#turnstileSingle');singleCaptcha=false;validateSingle();
-    };
+        log('Done. '+stats.ok+' delivered, '+stats.fail+' failed, '+stats.blocked+' blocked.','ok');
+        isRunning=false; btn.textContent='Send Messages'; btn.disabled=false;
+        turnstile.reset('#turnstileSingle'); singleCaptcha=false; validateSingle();
+    }
 
-    window.startBulk = async function() {
-        if(isRunning)return;var nums=document.getElementById('bulkNumbers').value.split(/[\n,;\s]+/).filter(function(l){return l.trim()}).map(function(l){return VP(l.trim())}).filter(function(v){return v});if(!nums.length)return;var perNum=parseInt(document.getElementById('bulkPerNum').value)||1;if(perNum>5)perNum=5;
-        isRunning=true;var btn=document.getElementById('btnBulk');btn.disabled=true;btn.textContent='Sending...';
+    async function startBulk() {
+        if(isRunning)return; var nums=document.getElementById('bulkNumbers').value.split(/[\n,;\s]+/).filter(function(l){return l.trim()}).map(function(l){return VP(l.trim())}).filter(function(v){return v});
+        if(!nums.length)return; var perNum=parseInt(document.getElementById('bulkPerNum').value)||1; if(perNum>5)perNum=5;
+        isRunning=true; var btn=document.getElementById('btnBulk'); btn.disabled=true; btn.textContent='Sending...';
         log('Bulk: '+nums.length+' numbers x '+perNum+' each','log-info');
-        for(var ni=0;ni<nums.length;ni++){var num=nums[ni];log('--- +977-'+num+' ('+(ni+1)+'/'+nums.length+') ---');for(var i=1;i<=perNum;i++){var r=await sendOneMessage(num,'#turnstileBulk');stats.sent++;if(r.ok){stats.ok++;log('#'+i+' Delivered','ok')}else{stats.fail++;log('#'+i+' '+r.msg,'err')}US();if(i<perNum)await new Promise(function(r){setTimeout(r,1500)})}}
-        log('Bulk done. '+stats.ok+' delivered, '+stats.fail+' failed, '+stats.blocked+' blocked.','ok');isRunning=false;btn.textContent='Send Bulk Messages';btn.disabled=false;turnstile.reset('#turnstileBulk');bulkCaptcha=false;validateBulk();
-    };
+        for(var ni=0;ni<nums.length;ni++){var num=nums[ni];log('--- +977-'+num+' ('+(ni+1)+'/'+nums.length+') ---');
+            for(var i=1;i<=perNum;i++){var r=await sendOneMessage(num,'#turnstileBulk');stats.sent++;if(r.ok){stats.ok++;log('#'+i+' Delivered','ok')}else{stats.fail++;log('#'+i+' '+r.msg,'err')}US();if(i<perNum)await new Promise(function(r){setTimeout(r,1500)})}}
+        log('Bulk done. '+stats.ok+' delivered, '+stats.fail+' failed, '+stats.blocked+' blocked.','ok');
+        isRunning=false; btn.textContent='Send Bulk Messages'; btn.disabled=false;
+        turnstile.reset('#turnstileBulk'); bulkCaptcha=false; validateBulk();
+    }
 
-    window.switchTab = function(t) { document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')}); document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')}); document.getElementById('tab-'+t).classList.add('active'); event.target.classList.add('active'); };
-    window.clearTerm = function() { document.getElementById('terminal').innerHTML = ''; };
     function toggleTheme() { var h=document.documentElement; h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark'); localStorage.setItem('theme',h.getAttribute('data-theme')); }
-    window.toggleTheme = toggleTheme;
     (function() { var s=localStorage.getItem('theme'); if(s) document.documentElement.setAttribute('data-theme',s); })();
-    validateSingle(); validateBulk();
 
+    // ===== EVENT LISTENERS (No inline handlers needed!) =====
+    document.getElementById('phone').addEventListener('input', function(e) { this.value = this.value.replace(/[^0-9]/g,''); validateSingle(); });
     document.getElementById('count').addEventListener('input', validateSingle);
-document.getElementById('count').addEventListener('change', validateSingle);
-document.getElementById('bulkPerNum').addEventListener('input', validateBulk);
-document.getElementById('bulkPerNum').addEventListener('change', validateBulk);
+    document.getElementById('count').addEventListener('change', validateSingle);
+    document.getElementById('agreeSingle').addEventListener('change', validateSingle);
+    document.getElementById('bulkNumbers').addEventListener('input', validateBulk);
+    document.getElementById('bulkPerNum').addEventListener('input', validateBulk);
+    document.getElementById('bulkPerNum').addEventListener('change', validateBulk);
+    document.getElementById('agreeBulk').addEventListener('change', validateBulk);
+    document.getElementById('btnSingle').addEventListener('click', startSingle);
+    document.getElementById('btnBulk').addEventListener('click', startBulk);
+    document.getElementById('clearTermBtn').addEventListener('click', function() { document.getElementById('terminal').innerHTML = ''; });
+    document.getElementById('tabSingleBtn').addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+        document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')});
+        document.getElementById('tab-single').classList.add('active'); this.classList.add('active');
+    });
+    document.getElementById('tabBulkBtn').addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+        document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')});
+        document.getElementById('tab-bulk').classList.add('active'); this.classList.add('active');
+    });
+
+    // Turnstile callbacks
+    window.onSingleCaptcha = function(t) { singleCaptcha = true; validateSingle(); };
+    window.onSingleCaptchaExpired = function() { singleCaptcha = false; validateSingle(); };
+    window.onBulkCaptcha = function(t) { bulkCaptcha = true; validateBulk(); };
+    window.onBulkCaptchaExpired = function() { bulkCaptcha = false; validateBulk(); };
+
+    window.toggleTheme = toggleTheme;
+
+    validateSingle();
+    validateBulk();
 </script>
 </body>
 </html>
