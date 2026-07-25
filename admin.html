@@ -42,29 +42,30 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
         body {
             font-family: var(--font); background: var(--bg); color: var(--text);
             line-height: 1.6; -webkit-font-smoothing: antialiased;
             transition: background 0.4s, color 0.4s; min-height: 100vh;
-            display: flex; flex-direction: column;
+            display: flex; flex-direction: column; overflow-x: hidden;
+            word-wrap: break-word; overflow-wrap: break-word;
         }
-        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 12px; }
 
         .nav {
-            position: sticky; top: 0; z-index: 100; height: 56px;
+            position: sticky; top: 0; z-index: 100; height: 52px;
             background: rgba(248,250,252,0.88); backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
         }
         [data-theme="dark"] .nav { background: rgba(11,17,32,0.88); }
         .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-        .nav-logo { font-weight: 800; font-size: 1rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .nav-logo img { width: 28px; height: 28px; border-radius: 5px; }
+        .nav-logo { font-weight: 800; font-size: clamp(0.8rem, 2.5vw, 1rem); color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .nav-logo img { width: 24px; height: 24px; border-radius: 5px; flex-shrink: 0; }
         .nav-logo em { font-style: normal; color: var(--red); }
-        .nav-end { display: flex; align-items: center; gap: 8px; }
+        .nav-end { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
         .btn {
-            display: inline-flex; align-items: center; gap: 5px; padding: 8px 16px;
-            border-radius: var(--radius); font-size: 0.8rem; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 4px; padding: 7px 14px;
+            border-radius: var(--radius); font-size: clamp(0.7rem, 2vw, 0.8rem); font-weight: 600;
             cursor: pointer; transition: var(--transition); text-decoration: none;
             border: 1.5px solid transparent; font-family: var(--font); white-space: nowrap;
         }
@@ -74,123 +75,125 @@
         .btn-ghost:hover { background: var(--bg-hover); }
         .btn-green { background: var(--green); color: #fff; }
         .btn-green:hover { background: #047857; }
-        .btn-sm { padding: 5px 10px; font-size: 0.7rem; }
-        .icon-btn {
-            width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border);
-            background: transparent; cursor: pointer; display: flex; align-items: center;
-            justify-content: center; color: var(--text-secondary);
-        }
-        .icon-btn:hover { background: var(--bg-hover); }
-        .icon-btn svg { width: 14px; height: 14px; }
+        .btn-sm { padding: 4px 8px; font-size: 0.66rem; }
 
-        .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 80vh; padding: 20px; }
+        .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 80vh; padding: 16px; }
         .login-card {
             background: var(--bg-alt); border: 2px solid var(--border);
-            border-radius: 14px; padding: 28px; width: 100%; max-width: 380px;
+            border-radius: 14px; padding: clamp(18px, 4vw, 28px); width: 100%; max-width: 360px;
             box-shadow: var(--shadow-lg); text-align: center;
         }
         .login-card .shield {
-            width: 48px; height: 48px; border-radius: 50%; background: var(--red-light);
+            width: 44px; height: 44px; border-radius: 50%; background: var(--red-light);
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 14px; border: 2px solid var(--red);
+            margin: 0 auto 12px; border: 2px solid var(--red);
         }
-        .login-card .shield svg { width: 22px; height: 22px; color: var(--red); }
-        .login-card h1 { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; }
-        .login-card p { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 18px; }
-        .field { margin-bottom: 10px; text-align: left; }
-        .field label { display: block; font-size: 0.74rem; font-weight: 600; margin-bottom: 4px; }
+        .login-card .shield svg { width: 20px; height: 20px; color: var(--red); }
+        .login-card h1 { font-size: 1.05rem; font-weight: 800; margin-bottom: 3px; }
+        .login-card p { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 16px; }
+        .field { margin-bottom: 8px; text-align: left; }
+        .field label { display: block; font-size: 0.7rem; font-weight: 600; margin-bottom: 3px; }
         .field-inp {
-            width: 100%; padding: 9px 40px 9px 12px; border: 1.5px solid var(--border);
-            border-radius: var(--radius); font-size: 0.84rem; font-family: var(--font);
+            width: 100%; padding: 8px 36px 8px 10px; border: 1.5px solid var(--border);
+            border-radius: var(--radius); font-size: 0.8rem; font-family: var(--font);
             background: var(--bg); color: var(--text); outline: none; transition: var(--transition);
         }
         .field-inp:focus { border-color: var(--red); }
-        .field-inp.error { border-color: var(--red); background: var(--red-light); }
-        .field-err { font-size: 0.66rem; color: var(--red); margin-top: 2px; display: none; }
+        .field-err { font-size: 0.62rem; color: var(--red); margin-top: 2px; display: none; }
         .pwd-wrap { position: relative; }
         .pwd-toggle {
-            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+            position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
             background: none; border: none; cursor: pointer; color: var(--text-muted);
-            padding: 4px; font-size: 0.9rem; line-height: 1;
+            padding: 3px; font-size: 0.85rem; line-height: 1;
         }
-        .pwd-toggle:hover { color: var(--text); }
 
-        .dashboard { display: none; padding: 20px 0 40px; }
+        .dashboard { display: none; padding: 14px 0 30px; }
         .dash-header {
             display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 10px; margin-bottom: 16px;
-            padding-bottom: 12px; border-bottom: 1.5px solid var(--border);
+            flex-wrap: wrap; gap: 8px; margin-bottom: 12px;
+            padding-bottom: 10px; border-bottom: 1.5px solid var(--border);
         }
-        .dash-header h2 { font-size: 1.1rem; font-weight: 800; }
-        .dash-header .user { font-size: 0.78rem; color: var(--text-secondary); }
+        .dash-header h2 { font-size: clamp(0.95rem, 3vw, 1.1rem); font-weight: 800; }
+        .dash-header .user { font-size: 0.7rem; color: var(--text-secondary); }
 
-        .tabs { display: flex; gap: 0; margin-bottom: 16px; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-        .tab { flex: 1; padding: 9px; text-align: center; font-size: 0.74rem; font-weight: 600; cursor: pointer; background: var(--bg-alt); color: var(--text-secondary); border: none; font-family: var(--font); }
+        .tabs { display: flex; gap: 0; margin-bottom: 12px; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .tab { flex: 1; padding: 8px 6px; text-align: center; font-size: clamp(0.62rem, 2vw, 0.74rem); font-weight: 600; cursor: pointer; background: var(--bg-alt); color: var(--text-secondary); border: none; font-family: var(--font); }
         .tab.active { background: var(--red); color: #fff; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .card {
             background: var(--bg-alt); border: 1.5px solid var(--border);
-            border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
+            border-radius: var(--radius); padding: clamp(10px, 3vw, 16px); margin-bottom: 10px;
             box-shadow: var(--shadow);
         }
-        .card h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .card h3 svg { width: 16px; height: 16px; color: var(--red); }
-        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .gateway-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+        .card h3 { font-size: 0.78rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .card h3 svg { width: 14px; height: 14px; color: var(--red); flex-shrink: 0; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .gateway-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 6px; }
         .gateway-chip {
-            display: flex; align-items: center; gap: 6px; padding: 8px 10px;
+            display: flex; align-items: center; gap: 5px; padding: 6px 8px;
             border: 1.5px solid var(--border); border-radius: var(--radius);
-            cursor: pointer; font-size: 0.72rem; font-weight: 600; transition: var(--transition);
+            cursor: pointer; font-size: clamp(0.62rem, 2vw, 0.7rem); font-weight: 600; transition: var(--transition);
         }
         .gateway-chip.active { background: var(--red-light); border-color: var(--red); }
-        .gateway-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+        .gateway-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
         .gateway-chip.active .gateway-dot { background: var(--red); }
-        textarea.field-inp { resize: vertical; min-height: 80px; line-height: 1.5; }
+        textarea.field-inp { resize: vertical; min-height: 70px; line-height: 1.5; }
 
-        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 14px; }
-        .stat { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; text-align: center; }
-        .stat .val { font-size: 1.2rem; font-weight: 700; }
-        .stat .lbl { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 6px; margin-bottom: 10px; }
+        .stat { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; text-align: center; }
+        .stat .val { font-size: clamp(0.9rem, 3vw, 1.1rem); font-weight: 700; }
+        .stat .lbl { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; }
 
-        .table-wrap { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-        .table-head { display: grid; grid-template-columns: 100px 1fr 70px 80px 1fr; padding: 8px 12px; background: var(--bg-hover); font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-muted); gap: 6px; }
-        .table-body { max-height: 350px; overflow-y: auto; }
-        .table-row { display: grid; grid-template-columns: 100px 1fr 70px 80px 1fr; padding: 7px 12px; font-size: 0.7rem; border-bottom: 1px solid var(--border); gap: 6px; align-items: center; }
+        .table-wrap { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; width: 100%; }
+        .table-head { display: grid; grid-template-columns: 80px 1fr 55px; padding: 7px 10px; background: var(--bg-hover); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-muted); gap: 4px; }
+        .table-body { max-height: 300px; overflow-y: auto; }
+        .table-row { display: grid; grid-template-columns: 80px 1fr 55px; padding: 6px 10px; font-size: 0.66rem; border-bottom: 1px solid var(--border); gap: 4px; align-items: center; }
         .table-row:last-child { border-bottom: none; }
         .st-ok { color: var(--green); font-weight: 700; } .st-fail { color: var(--red); font-weight: 700; } .st-blocked { color: var(--amber); font-weight: 700; }
+        .hide-mobile { display: block; }
+        .show-mobile { display: none; }
 
-        .protect-table { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 8px 12px; background: var(--bg-hover); font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-muted); gap: 6px; }
-        .protect-row { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 7px 12px; font-size: 0.7rem; border-bottom: 1px solid var(--border); gap: 6px; align-items: center; }
+        .protect-head { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 7px 10px; background: var(--bg-hover); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-muted); gap: 4px; }
+        .protect-row { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 6px 10px; font-size: 0.66rem; border-bottom: 1px solid var(--border); gap: 4px; align-items: center; }
 
         .terminal {
             background: var(--bg); border: 1px solid var(--border);
-            border-radius: var(--radius); overflow: hidden; margin-top: 12px;
+            border-radius: var(--radius); overflow: hidden; margin-top: 10px;
         }
-        .terminal-head { padding: 6px 10px; border-bottom: 1px solid var(--border); font-size: 0.64rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
-        .terminal-body { padding: 8px 10px; max-height: 180px; overflow-y: auto; font-family: 'SF Mono', monospace; font-size: 0.68rem; line-height: 1.5; }
-        .log { display: flex; gap: 5px; }
-        .log-time { color: var(--text-muted); font-size: 0.6rem; flex-shrink: 0; }
+        .terminal-head { padding: 5px 8px; border-bottom: 1px solid var(--border); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
+        .terminal-body { padding: 6px 8px; max-height: 150px; overflow-y: auto; font-family: 'SF Mono', monospace; font-size: 0.64rem; line-height: 1.5; }
+        .log { display: flex; gap: 4px; }
+        .log-time { color: var(--text-muted); font-size: 0.56rem; flex-shrink: 0; }
         .log-ok { color: var(--green); } .log-err { color: var(--red); } .log-info { color: var(--blue); }
 
-        .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); padding: 10px 18px; border-radius: var(--radius); font-weight: 600; font-size: 0.76rem; z-index: 300; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; }
+        .toast { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); padding: 8px 16px; border-radius: var(--radius); font-weight: 600; font-size: 0.7rem; z-index: 300; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; }
         .toast.ok { background: var(--green); color: #fff; }
         .toast.err { background: var(--red); color: #fff; }
 
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
+            .container { padding: 0 8px; }
             .row { grid-template-columns: 1fr; }
-            .table-head, .table-row { grid-template-columns: 80px 1fr 55px; }
-            .table-head span:nth-child(4), .table-head span:nth-child(5),
-            .table-row span:nth-child(4), .table-row span:nth-child(5) { display: none; }
-            .protect-table, .protect-row { grid-template-columns: 1fr 1fr; }
-            .tabs { flex-wrap: wrap; }
-            .tab { flex: unset; width: 50%; }
+            .gateway-grid { grid-template-columns: repeat(3, 1fr); }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .tabs { flex-wrap: nowrap; }
+            .tab { padding: 7px 4px; font-size: 0.6rem; }
+            .table-head { grid-template-columns: 70px 1fr 50px; font-size: 0.55rem; }
+            .table-row { grid-template-columns: 70px 1fr 50px; font-size: 0.62rem; }
+            .hide-mobile { display: none; }
+            .show-mobile { display: inline; }
+            .protect-head { grid-template-columns: 1fr 1fr; }
+            .protect-row { grid-template-columns: 1fr 1fr; }
+            .protect-head span:last-child, .protect-row span:last-child { display: none; }
+            .dash-header { flex-direction: column; align-items: flex-start; }
+            .card h3 { font-size: 0.72rem; }
+            .btn { padding: 6px 10px; font-size: 0.66rem; }
         }
-        @media (max-width: 400px) {
+        @media (max-width: 360px) {
             .gateway-grid { grid-template-columns: repeat(2, 1fr); }
             .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .tab { width: 100%; }
+            .tab { font-size: 0.55rem; padding: 6px 2px; }
         }
     </style>
 </head>
@@ -198,7 +201,7 @@
 
 <nav class="nav">
     <div class="container nav-inner">
-        <a href="index.html" class="nav-logo"><img src="/favicon/favicon-96x96.png" alt="">SMS<em>Bomber</em>NP <span style="font-size:0.65rem;color:var(--red);font-weight:700;margin-left:4px">ADMIN</span></a>
+        <a href="index.html" class="nav-logo"><img src="/favicon/favicon-96x96.png" alt="">SMS<em>Bomber</em>NP <span style="font-size:0.6rem;color:var(--red);font-weight:700;margin-left:2px" class="hide-mobile">ADMIN</span></a>
         <div class="nav-end" id="navEnd"></div>
     </div>
 </nav>
@@ -211,18 +214,18 @@
         <div class="field"><label>Password</label>
             <div class="pwd-wrap">
                 <input type="password" class="field-inp" id="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
-                <button class="pwd-toggle" onclick="togglePwd()" id="pwdToggle" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                <button class="pwd-toggle" onclick="togglePwd()" id="pwdToggle" aria-label="Show password"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
             </div>
         </div>
         <div class="field-err" id="loginError"></div>
-        <button class="btn btn-red" id="loginBtn" onclick="login()" style="width:100%;justify-content:center;margin-top:8px">Sign In</button>
+        <button class="btn btn-red" id="loginBtn" onclick="login()" style="width:100%;justify-content:center;margin-top:6px">Sign In</button>
     </div>
 </div>
 
 <div class="dashboard container" id="dashboard">
     <div class="dash-header">
         <div><h2>Admin Dashboard</h2><div class="user" id="userEmail"></div></div>
-        <div style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="refreshAll()">Refresh</button><button class="btn btn-red btn-sm" onclick="logout()">Logout</button></div>
+        <div style="display:flex;gap:4px"><button class="btn btn-ghost btn-sm" onclick="refreshAll()">Refresh</button><button class="btn btn-red btn-sm" onclick="logout()">Logout</button></div>
     </div>
 
     <div class="stats-row" id="statsRow">
@@ -236,29 +239,26 @@
     <div class="tabs">
         <button class="tab active" onclick="switchTab('logs')">Logs</button>
         <button class="tab" onclick="switchTab('protected')">Protected</button>
-        <button class="tab" onclick="switchTab('sender')">SMS Sender</button>
+        <button class="tab" onclick="switchTab('sender')">Sender</button>
     </div>
 
-    <!-- LOGS TAB -->
     <div class="tab-content active" id="tab-logs">
         <div class="table-wrap">
-            <div class="table-head"><span>Time</span><span>Phone</span><span>Status</span><span>Gateway</span><span>Referrer</span></div>
-            <div class="table-body" id="logsTable"><div style="padding:30px;text-align:center;color:var(--text-muted)">Loading...</div></div>
+            <div class="table-head"><span>Time</span><span>Phone</span><span>Status</span></div>
+            <div class="table-body" id="logsTable"><div style="padding:25px;text-align:center;color:var(--text-muted);font-size:0.75rem">Loading...</div></div>
         </div>
     </div>
 
-    <!-- PROTECTED TAB -->
     <div class="tab-content" id="tab-protected">
         <div class="card">
             <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Protected Numbers</h3>
             <div class="table-wrap">
-                <div class="protect-table"><span>Phone</span><span>Name</span><span>Protected At</span></div>
-                <div class="table-body" id="protectedTable" style="max-height:350px"><div style="padding:30px;text-align:center;color:var(--text-muted)">Loading...</div></div>
+                <div class="protect-head"><span>Phone</span><span>Name</span><span>Date</span></div>
+                <div class="table-body" id="protectedTable" style="max-height:300px"><div style="padding:25px;text-align:center;color:var(--text-muted);font-size:0.75rem">Loading...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- SENDER TAB -->
     <div class="tab-content" id="tab-sender">
         <div class="card">
             <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Admin SMS Sender</h3>
@@ -266,12 +266,12 @@
                 <div class="field"><label>Phone Number</label><input type="text" class="field-inp" id="aPhone" placeholder="98XXXXXXXX" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
                 <div class="field"><label>Messages</label><input type="number" class="field-inp" id="aCount" value="1" min="1" max="100"></div>
             </div>
-            <div class="field" style="margin-top:8px"><label>Gateways</label>
+            <div class="field" style="margin-top:6px"><label>Gateways</label>
                 <div class="gateway-grid" id="gatewayList"></div>
             </div>
-            <div style="display:flex;gap:8px;margin-top:12px">
-                <button class="btn btn-red" onclick="adminSend(false)" style="flex:1;justify-content:center">Send via Selected</button>
-                <button class="btn btn-green" onclick="adminSend(true)" style="flex:1;justify-content:center">Send via ALL</button>
+            <div style="display:flex;gap:6px;margin-top:10px">
+                <button class="btn btn-red" onclick="adminSend(false)" style="flex:1;justify-content:center">Send Selected</button>
+                <button class="btn btn-green" onclick="adminSend(true)" style="flex:1;justify-content:center">Send All</button>
             </div>
         </div>
 
@@ -279,7 +279,7 @@
             <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/></svg>Bulk Mode</h3>
             <div class="field"><label>Phone Numbers (one per line)</label><textarea class="field-inp" id="aBulkNums" placeholder="9867844454&#10;9842308880"></textarea></div>
             <div class="row"><div class="field"><label>Per Number</label><input type="number" class="field-inp" id="aBulkCount" value="1" min="1" max="10"></div></div>
-            <button class="btn btn-red" onclick="adminBulk()" style="width:100%;justify-content:center;margin-top:8px">Send Bulk</button>
+            <button class="btn btn-red" onclick="adminBulk()" style="width:100%;justify-content:center;margin-top:6px">Send Bulk</button>
         </div>
 
         <div class="terminal">
@@ -294,7 +294,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-    import { getDatabase, ref, query, orderByChild, limitToLast, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+    import { getDatabase, ref, query, orderByChild, limitToLast, onValue, get, push } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
     const fc = {
         apiKey: "AIzaSyAxQ0_nu_g0ivWMc820w-mqRpq8JklxUoA",
@@ -311,17 +311,16 @@
 
     const WORKER_URL = "https://smsbomber.ethical-laxman.workers.dev/";
     const GATEWAYS = ['clamphook','ambition','merodoctor','collegeinfo','pariksha','quickconnect'];
-    const GNAMES = {clamphook:'ClampHook',ambition:'Ambition Guru',merodoctor:'MeroDoctor',collegeinfo:'College Info',pariksha:'Pariksha',quickconnect:'QuickConnect'};
+    const GNAMES = {clamphook:'ClampHook',ambition:'Ambition',merodoctor:'MeroDoctor',collegeinfo:'CollegeInfo',pariksha:'Pariksha',quickconnect:'QuickConnect'};
 
     var gwHTML = '';
     GATEWAYS.forEach(function(g){ gwHTML += '<div class="gateway-chip active" id="agw-'+g+'" onclick="this.classList.toggle(\'active\')"><div class="gateway-dot"></div>'+GNAMES[g]+'</div>'; });
     document.getElementById('gatewayList').innerHTML = gwHTML;
 
     function getSelected(){ var s=[]; GATEWAYS.forEach(function(g){ if(document.getElementById('agw-'+g).classList.contains('active')) s.push(g); }); return s.length ? s : GATEWAYS; }
-
     function VP(n){ var c=n.replace(/[^0-9]/g,''); if(c.startsWith('977'))c=c.slice(3); var vp=['984','985','986','974','975','976','980','981','982','961','962','988','972','973','970']; return c.length===10&&(c.startsWith('98')||c.startsWith('97'))&&vp.indexOf(c.slice(0,3))!==-1?c:null; }
-    function ST(m,t){ var x=document.getElementById('toast'); x.textContent=m; x.className='toast '+(t==='ok'?'ok':'err'); x.style.display='block'; setTimeout(function(){x.style.display='none'},3000); }
-    function aLog(m,t){ var d=new Date().toLocaleTimeString('en-US',{hour12:false}); var div=document.createElement('div'); div.className='log'; var c=t==='ok'?'log-ok':t==='err'?'log-err':'log-info'; div.innerHTML='<span class="log-time">'+d+'</span><span class="'+c+'">'+m+'</span>'; var term=document.getElementById('aTerminal'); term.appendChild(div); if(term.children.length>100)term.removeChild(term.firstChild); term.scrollTop=term.scrollHeight; }
+    function ST(m,t){ var x=document.getElementById('toast'); x.textContent=m; x.className='toast '+(t==='ok'?'ok':'err'); x.style.display='block'; setTimeout(function(){x.style.display='none'},2500); }
+    function aLog(m,t){ var d=new Date().toLocaleTimeString('en-US',{hour12:false}); var div=document.createElement('div'); div.className='log'; var c=t==='ok'?'log-ok':t==='err'?'log-err':'log-info'; div.innerHTML='<span class="log-time">'+d+'</span><span class="'+c+'">'+m+'</span>'; var term=document.getElementById('aTerminal'); term.appendChild(div); if(term.children.length>80)term.removeChild(term.firstChild); term.scrollTop=term.scrollHeight; }
 
     async function sendViaWorker(phone, gateway) {
         try {
@@ -337,8 +336,8 @@
         var p=VP(document.getElementById('aPhone').value); if(!p){ST('Invalid phone','err');return}
         var n=parseInt(document.getElementById('aCount').value)||1; if(n>100)n=100;
         var gws = all ? GATEWAYS : getSelected();
-        aLog('Sending '+n+' msgs to +977-'+p+' via '+gws.length+' gateways','log-info');
-        for(var i=1;i<=n;i++){ var gw=gws[Math.floor(Math.random()*gws.length)]; var r=await sendViaWorker(p,gw); if(r.ok){aLog('#'+i+' Delivered','ok')}else{aLog('#'+i+' '+r.msg,'err')} if(i<n)await new Promise(function(r){setTimeout(r,500)}); }
+        aLog('Sending '+n+' msgs to +977-'+p,'log-info');
+        for(var i=1;i<=n;i++){ var gw=gws[Math.floor(Math.random()*gws.length)]; var r=await sendViaWorker(p,gw); if(r.ok){aLog('#'+i+' OK','ok')}else{aLog('#'+i+' '+r.msg,'err')} if(i<n)await new Promise(function(r){setTimeout(r,400)}); }
         aLog('Done.','ok');ST('Sent!','ok');refreshAll();
     };
 
@@ -347,9 +346,9 @@
         if(!nums.length){ST('No valid numbers','err');return}
         var perNum=parseInt(document.getElementById('aBulkCount').value)||1; if(perNum>10)perNum=10;
         var gws=getSelected();
-        aLog('Bulk: '+nums.length+' numbers x '+perNum+' via '+gws.length+' gateways','log-info');
-        for(var ni=0;ni<nums.length;ni++){ var num=nums[ni];aLog('--- +977-'+num+' ('+(ni+1)+'/'+nums.length+') ---');
-            for(var i=1;i<=perNum;i++){ var gw=gws[Math.floor(Math.random()*gws.length)]; var r=await sendViaWorker(num,gw); if(r.ok){aLog('#'+i+' Delivered','ok')}else{aLog('#'+i+' '+r.msg,'err')} if(i<perNum)await new Promise(function(r){setTimeout(r,400)}); } }
+        aLog('Bulk: '+nums.length+' nums x '+perNum,'log-info');
+        for(var ni=0;ni<nums.length;ni++){ var num=nums[ni];aLog('+977-'+num+' ('+(ni+1)+'/'+nums.length+')');
+            for(var i=1;i<=perNum;i++){ var gw=gws[Math.floor(Math.random()*gws.length)]; var r=await sendViaWorker(num,gw); if(r.ok){aLog('#'+i+' OK','ok')}else{aLog('#'+i+' '+r.msg,'err')} if(i<perNum)await new Promise(function(r){setTimeout(r,300)}); } }
         aLog('Bulk done.','ok');ST('Bulk sent!','ok');refreshAll();
     };
 
@@ -361,15 +360,15 @@
         err.style.display='none'; if(!e||!p){err.textContent='Email and password required';err.style.display='block';return}
         btn.disabled=true;btn.textContent='Signing in...';
         signInWithEmailAndPassword(auth,e,p).then(function(){ST('Access granted','ok')}).catch(function(er){
-            var m='Invalid credentials';if(er.code==='auth/user-not-found')m='No account found';if(er.code==='auth/wrong-password')m='Wrong password';if(er.code==='auth/too-many-requests')m='Too many attempts';
+            var m='Invalid credentials';if(er.code==='auth/user-not-found')m='No account found';if(er.code==='auth/wrong-password')m='Wrong password';
             err.textContent=m;err.style.display='block';btn.disabled=false;btn.textContent='Sign In';
         });
     };
     window.logout = function(){ signOut(auth).then(function(){ST('Logged out','ok')}); };
     window.togglePwd = function(){
         var inp=document.getElementById('password'); var btn=document.getElementById('pwdToggle');
-        if(inp.type==='password'){ inp.type='text'; btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'; }
-        else { inp.type='password'; btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'; }
+        if(inp.type==='password'){ inp.type='text'; btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'; }
+        else { inp.type='password'; btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'; }
     };
 
     onAuthStateChanged(auth,function(user){
@@ -396,15 +395,15 @@
     }
 
     function loadLogs(){
-        var lr=query(ref(db,'sms_logs'),orderByChild('timestamp'),limitToLast(200));
+        var lr=query(ref(db,'sms_logs'),orderByChild('timestamp'),limitToLast(150));
         onValue(lr,function(snapshot){
             var logs=[];snapshot.forEach(function(c){logs.push(c.val())});logs.reverse();
             var html='';logs.forEach(function(l){
                 var time=l.timestamp?new Date(l.timestamp).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'--';
                 var phone=l.phone?'+977-'+l.phone:'--';var status=l.status||'unknown',sc=status==='delivered'?'st-ok':status==='blocked'?'st-blocked':'st-fail';
-                html+='<div class="table-row"><span style="font-size:0.64rem;color:var(--text-muted)">'+time+'</span><span style="font-weight:600">'+phone+'</span><span class="'+sc+'">'+status+'</span><span style="font-size:0.64rem">'+(l.gateway||'auto')+'</span><span style="font-size:0.6rem;color:var(--text-muted)">'+(l.referrer||'direct')+'</span></div>';
+                html+='<div class="table-row"><span style="font-size:0.6rem;color:var(--text-muted)">'+time+'</span><span style="font-weight:600;font-size:0.64rem">'+phone+'</span><span class="'+sc+'" style="font-size:0.6rem">'+status+'</span></div>';
             });
-            document.getElementById('logsTable').innerHTML=html||'<div style="padding:30px;text-align:center;color:var(--text-muted)">No logs yet</div>';
+            document.getElementById('logsTable').innerHTML=html||'<div style="padding:25px;text-align:center;color:var(--text-muted);font-size:0.75rem">No logs yet</div>';
             loadStats();
         });
     }
@@ -412,8 +411,8 @@
     function loadProtected(){
         var pr=ref(db,'protected_numbers');
         onValue(pr,function(snapshot){
-            var html='';snapshot.forEach(function(c){var v=c.val();html+='<div class="protect-row"><span>+977-'+v.phone+'</span><span>'+v.name+'</span><span style="font-size:0.64rem;color:var(--text-muted)">'+new Date(v.protected_at).toLocaleDateString()+'</span></div>';});
-            document.getElementById('protectedTable').innerHTML=html||'<div style="padding:30px;text-align:center;color:var(--text-muted)">No protected numbers</div>';
+            var html='';snapshot.forEach(function(c){var v=c.val();html+='<div class="protect-row"><span style="font-size:0.64rem">+977-'+v.phone+'</span><span style="font-size:0.64rem">'+v.name+'</span><span style="font-size:0.58rem;color:var(--text-muted)">'+new Date(v.protected_at).toLocaleDateString()+'</span></div>';});
+            document.getElementById('protectedTable').innerHTML=html||'<div style="padding:25px;text-align:center;color:var(--text-muted);font-size:0.75rem">No protected numbers</div>';
             loadStats();
         });
     }
